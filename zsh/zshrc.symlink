@@ -1,5 +1,5 @@
-# shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+# shortcut to this dotfiles path is $DOTFILES
+export DOTFILES=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
@@ -14,28 +14,41 @@ fi
 
 # all of our zsh files
 typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+config_files=($DOTFILES/**/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
 do
+  echo $file: loading path.
   source $file
 done
 
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
+  echo $file: loading configuration.
   source $file
 done
 
 # initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
+## THIS ENTERS AN INFINITE LOOP... probably because of oh-my-zsh
+## autoload -U compinit
+## compinit
 
-# load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
-do
-  source $file
-done
+## load every completion after autocomplete loads
+#for file in ${(M)config_files:#*/completion.zsh}
+#do
+#  source $file
+#done
 
 unset config_files
+
+
+export ZSH=/home/kaniabi/.oh-my-zsh
+
+ZSH_THEME="avit"
+ZSH_CUSTOM=$DOTFILES/oh-my-zsh
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh

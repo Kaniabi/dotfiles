@@ -1,10 +1,14 @@
-# grc overides for ls
-#   Made possible through contributions from generous benefactors like
-#   `brew install coreutils`
-if $(gls &>/dev/null)
-then
-  alias ls="gls -F --color"
-  alias l="gls -lAh --color"
-  alias ll="gls -l --color"
-  alias la='gls -A --color'
-fi
+alias dir="ls -la"
+
+# FLEET
+alias ff="fleetctl"
+alias ffdir="fleetctl list-units"
+alias ffst="fleetctl status"
+alias ffj="fleetctl journal"
+alias ffdel="fleetctl destroy"
+alias ffstart="fleetctl start"
+
+# DOCKER
+alias dd="sudo docker"
+alias ddi="sudo docker images"
+alias ddps="sudo docker ps"
