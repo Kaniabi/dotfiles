@@ -1,0 +1,9 @@
+[user]
+    name = Alexandre Andrade
+    email = kaniabi@gmail.com
+[credential]
+    helper = cache
+[alias]
+    lg = log --oneline --graph --decorate -n30
+	st = status -b -s
+
