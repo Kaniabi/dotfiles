@@ -46,7 +46,7 @@ unset config_files
 
 export ZSH=/home/kaniabi/.oh-my-zsh
 
-ZSH_THEME="avit"
+ZSH_THEME="kaniabi"
 ZSH_CUSTOM=$DOTFILES/oh-my-zsh
 
 plugins=(git)
