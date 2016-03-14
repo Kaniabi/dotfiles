@@ -26,7 +26,7 @@ done
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
-  echo $file: loading configuration.
+  # echo $file: loading configuration.
   source $file
 done
 
