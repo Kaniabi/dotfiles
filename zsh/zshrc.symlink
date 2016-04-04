@@ -44,7 +44,7 @@ done
 unset config_files
 
 
-export ZSH=/home/kaniabi/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="kaniabi"
 ZSH_CUSTOM=$DOTFILES/oh-my-zsh
