@@ -4,6 +4,6 @@
 [credential]
     helper = cache
 [alias]
-    lg = log --oneline --graph --decorate -n30
+    lg = log --oneline --graph --decorate -n20
 	st = status -b -s
 
