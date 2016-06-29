@@ -16,7 +16,7 @@
   * skype
   * teamviewer
 
-* Packages: `$ sudo apt-get install git zsh terminator fleet`
+* Packages: `$ sudo apt-get install git zsh terminator fleet p7zip-full`
 
 * Docker:
   ```bash
@@ -45,3 +45,16 @@
 
 * DNS (WIP)
   * `/etc/resolv.conf`
+  
+* Enable SysReq: REISUB
+  A way out when we get Ubuntu Freeze:
+
+  * http://askubuntu.com/questions/4408/what-should-i-do-when-ubuntu-freezes/36717#36717
+
+  ```
+  $ sudo nano /etc/sysctl.d/10-magic-sysrq.conf
+  # and switch 176 to 244
+  $ echo 244 | sudo tee /proc/sys/kernel/sysrq
+  ```
+
+  NOTE: Can't make it work, thou.
