@@ -12,9 +12,15 @@
 # Environment
 * Manual install (.deb): download and install manually.
   * chrome
+  * teamviewer
   * virtualebox (failed)
   * skype
-  * teamviewer
+    ```
+    $ sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+    $ sudo dpkg --add-architecture i386
+    $ sudo apt-get update
+    $ sudo apt-get install skype
+    ```
 
 * Packages: `$ sudo apt-get install git zsh terminator fleet p7zip-full`
 
