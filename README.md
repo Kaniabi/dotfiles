@@ -40,8 +40,8 @@
   * Configure zsh: ```chsh -s `which zsh` ```;
   * Create new SSH key: `$ ssh-keygen`;
   * Register the key on github.com;
-  * Download .dotfiles: `$ git clone git@github.com:Kaniabi/dotfiles.git .dotfiles`;
-  * Download .oh-my-zsh: `$ git clone https://github.com/robbyrussell/oh-my-zsh.git`;
+  * Download .dotfiles: `$ git clone git@github.com:Kaniabi/dotfiles.git .dotfiles`
+  * Download .oh-my-zsh: `$ git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh`
 
 * Install PyCharm
   * Download PROFESSIONAL version
