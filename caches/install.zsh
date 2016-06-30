@@ -1,3 +1,3 @@
-export PIP_INDEX_URL=http://hack-01.axado.com.br:3141/root/pypi/+simple/
-export PIP_TRUSTED_HOST=hack-01.axado.com.br
+export PIP_TRUSTED_HOST=devpi.axado.com.br
+export PIP_INDEX_URL=http://${PIP_TRUSTED_HOST}:3141/root/pypi/+simple/
 
