@@ -22,7 +22,14 @@
     $ sudo apt-get install skype
     ```
 
-* Packages: `$ sudo apt-get install git zsh terminator fleet p7zip-full`
+* Latest GIT:
+  ```
+  $ sudo add-apt-repository ppa:git-core/ppa
+  $ sudo apt-get update
+  $ sudo apt-get install git
+  ```
+
+* Packages: `$ sudo apt-get install zsh terminator fleet p7zip-full`
 
 * Docker:
   ```bash
