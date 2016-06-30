@@ -4,7 +4,7 @@
 
 * Install using USB stick
 * Soon after installation, execute
-  ```
+  ```bash
   $ sudo apt-get upgrade
   $ sudo apt-get update
   ```
@@ -15,7 +15,7 @@
   * teamviewer
   * virtualebox (failed)
   * skype
-    ```
+    ```bash
     $ sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
     $ sudo dpkg --add-architecture i386
     $ sudo apt-get update
@@ -50,7 +50,15 @@
   * SAVE: how to save/load settings?
 
 * DNS (WIP)
-  * `/etc/resolv.conf`
+  * `/etc/hosts`
+    ```
+    192.168.0.66  hack-01
+    192.168.0.66  registry.axado.com.br
+    192.168.0.66  devpi.axado.com.br
+    192.168.0.61  hack-02
+    192.168.0.27  hack-03
+    ```
+
   
 * Enable SysReq: REISUB
   A way out when we get Ubuntu Freeze:
@@ -64,3 +72,4 @@
   ```
 
   NOTE: Can't make it work, thou.
+
