@@ -9,6 +9,23 @@
   $ sudo apt-get update
   ```
 
+* Update KERNEL
+
+  We're having some random freezes with kernel panic (blinking CAPSLOCK). Updating the kernel to the latest available
+  HOPEFULLY solve the problem
+
+  ```bash
+  $ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-headers-4.7.0-040700rc5_4.7.0-040700rc5.201606262232_all.deb
+  $ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-headers-4.7.0-040700rc5-generic_4.7.0-040700rc5.201606262232_amd64.deb
+  $ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-image-4.7.0-040700rc5-generic_4.7.0-040700rc5.201606262232_amd64.deb
+  $ sudo dpkg -i linux-headers-4.7*.deb linux-image-4.7*.deb
+  $ sudo update-grub
+  $ sudo reboot
+  ```
+
+  * REFERENCE: [Ubuntu 15.10 and 16.04 keep freezing randomly](http://askubuntu.com/questions/761706/ubuntu-15-10-and-16-04-keep-freezing-randomly)
+
+
 # Environment
 * Manual install (.deb): download and install manually.
   * chrome
@@ -29,7 +46,7 @@
   $ sudo apt-get install git
   ```
 
-* Packages: `$ sudo apt-get install zsh terminator fleet p7zip-full`
+* Packages: `$ sudo apt-get install zsh terminator fleet p7zip-full default-jre`
 
 * Docker:
   ```bash
