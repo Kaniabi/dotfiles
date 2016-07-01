@@ -1,80 +1,143 @@
 # Development machine
 
-# Ubuntu 16.04
+## Preparation
 
-* Install using USB stick
-* Soon after installation, execute
-  ```bash
-  $ sudo apt-get upgrade
-  $ sudo apt-get update
-  ```
+### Create Ubuntu 16.04 installation pendrive
 
-* Update KERNEL
+* Using Startup Disc Creator generates a 16Gb in a 2Gb pendrive.
+    * Can't write files on it (custom files);
+    * Can't create a different partition for custom files;
+    * [USB Startup Disk Creator Block Size Problem](http://askubuntu.com/questions/778660/usb-startup-disk-creator-block-size-problem)
 
-  We're having some random freezes with kernel panic (blinking CAPSLOCK). Updating the kernel to the latest available
-  HOPEFULLY solve the problem
+* The package UNetBootin version doesn't work on Ubutun 16.04.
 
-  ```bash
-  $ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-headers-4.7.0-040700rc5_4.7.0-040700rc5.201606262232_all.deb
-  $ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-headers-4.7.0-040700rc5-generic_4.7.0-040700rc5.201606262232_amd64.deb
-  $ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-image-4.7.0-040700rc5-generic_4.7.0-040700rc5.201606262232_amd64.deb
-  $ sudo dpkg -i linux-headers-4.7*.deb linux-image-4.7*.deb
-  $ sudo update-grub
-  $ sudo reboot
-  ```
+### unetbootin
+```bash
+$ sudo add-apt-repository ppa:gezakovacs/ppa
+$ sudo apt-get update
+$ sudo apt-get install unetbootin
+```
 
-  * REFERENCE: [Ubuntu 15.10 and 16.04 keep freezing randomly](http://askubuntu.com/questions/761706/ubuntu-15-10-and-16-04-keep-freezing-randomly)
+## Install OS
+
+### Install
+
+Install Ubuntu 16.04 using the generated pendrive.
+
+### Upgrade and Update the system
+```bash
+$ sudo apt-get upgrade
+$ sudo apt-get update
+```
+
+### Update the KERNEL
+
+We're having some random freezes with kernel panic (blinking CAPSLOCK). Updating the kernel to the latest available
+HOPEFULLY solve the problem
+
+```bash
+$ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-headers-4.7.0-040700rc5_4.7.0-040700rc5.201606262232_all.deb
+$ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-headers-4.7.0-040700rc5-generic_4.7.0-040700rc5.201606262232_amd64.deb
+$ wget kernel.ubuntu.com/~kernel-ppa/mainline/v4.7-rc5-yakkety/linux-image-4.7.0-040700rc5-generic_4.7.0-040700rc5.201606262232_amd64.deb
+$ sudo dpkg -i linux-headers-4.7*.deb linux-image-4.7*.deb
+$ sudo update-grub
+$ sudo reboot
+```
+
+* [Ubuntu 15.10 and 16.04 keep freezing randomly](http://askubuntu.com/questions/761706/ubuntu-15-10-and-16-04-keep-freezing-randomly)
 
 
-# Environment
-* Manual install (.deb): download and install manually.
-  * chrome
-  * teamviewer
-  * virtualebox (failed)
-  * skype
-    ```bash
-    $ sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-    $ sudo dpkg --add-architecture i386
-    $ sudo apt-get update
-    $ sudo apt-get install skype
-    ```
+## Configure environment
 
-* Latest GIT:
-  ```
-  $ sudo add-apt-repository ppa:git-core/ppa
-  $ sudo apt-get update
-  $ sudo apt-get install git
-  ```
+### chrome (not tested)
+```bash
+$ sudo apt-get install libxss1 libappindicator1 libindicator7
+$ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+$ sudo dpkg -i google-chrome*.deb
+$ sudo apt-get install -f
+```
 
-* Packages: `$ sudo apt-get install zsh terminator fleet p7zip-full default-jre`
+### teamviewer (not tested)
+```bash
+$ wget http://download.teamviewer.com/download/teamviewer_amd64.deb
+$ sudo dpkg -i teamviewer_amd64.deb
+$ sudo apt-get install -f
+```
 
-* Docker:
-  ```bash
-  $ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-  $ echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
-  $ sudo apt-get update
-  $ sudo apt-get install docker-engine
-  ```
+### virtualbox (not tested)
+```bash
+$ sudo apt-add-repository "deb http://download.virtualbox.org/virtualbox/debian xenial contrib"
+$ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+$ sudo apt-get update
+$ sudo apt-get install virtualbox-5.0
+```
 
-* Python
-  * pip: `$ sudo python get-pip.py`
-  * Root python packages: `$ sudo pip install virtualenvwrapper colorama invoke`
+### skype
+```bash
+$ sudo add-apt-repository "deb http://archive.canonical.com/ xenial partner"
+$ sudo dpkg --add-architecture i386
+$ sudo apt-get update
+$ sudo apt-get install skype
+```
 
-* Shell configuration
-  * Configure zsh: ```chsh -s `which zsh` ```;
-  * Create new SSH key: `$ ssh-keygen`;
-  * Register the key on github.com;
-  * Download .dotfiles: `$ git clone git@github.com:Kaniabi/dotfiles.git .dotfiles`
-  * Download .oh-my-zsh: `$ git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh`
+### git
+```bash
+$ sudo add-apt-repository ppa:git-core/ppa
+$ sudo apt-get update
+$ sudo apt-get install git
+```
 
-* Install PyCharm
-  * Download PROFESSIONAL version
-  * Register using login/password
-  * Download settings from DROPBOX
-  * SAVE: how to save/load settings?
+### docker
+```bash
+$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+$ echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+$ sudo apt-get update
+$ sudo apt-get install docker-engine
+```
 
-* DNS (WIP)
-  * `/etc/hosts`
+### system packages:
+```bash
+$ sudo apt-get install zsh terminator fleet p7zip-full default-jre
+```
+
+### pip
+```bash
+$ sudo python get-pip.py
+```
+
+### python packages
+```bash
+$ sudo pip install virtualenvwrapper colorama invoke
+```
+
+### Use zsh
+```bash
+$ chsh -s `which zsh`
+```
+
+### Generate a new ssh-key
+```bash
+$ ssh-keygen
+# TASK: Register the key on github.com;
+```
+
+### dotfiles
+```bash
+$ git clone git@github.com:Kaniabi/dotfiles.git .dotfiles
+$ git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh
+$ .dotfiles/scripts/bootstrap
+```
+
+### pycharm
+
+* Download PROFESSIONAL version
+* Register using login/password
+* Download settings from DROPBOX
+* TODO: how to automatically import/export pycharm settings?
+
+### Custom hosts names
+
+* FILE: `/etc/hosts`
     ```
     192.168.0.66  hack-01
     192.168.0.66  registry.axado.com.br
@@ -83,17 +146,13 @@
     192.168.0.27  hack-03
     ```
 
-  
-* Enable SysReq: REISUB
-  A way out when we get Ubuntu Freeze:
+### Enable SysReq: REISUB
+A way out when we get Ubuntu Freeze. Once enabled you can use `Alt+PrtScn+ R E I S U B`.
 
-  * http://askubuntu.com/questions/4408/what-should-i-do-when-ubuntu-freezes/36717#36717
+```bash
+$ sudo sed -i -e 's/176/244/g' /etc/sysctl.d/10-magic-sysrq.conf
+$ echo 244 | sudo tee /proc/sys/kernel/sysrq
+```
 
-  ```
-  $ sudo nano /etc/sysctl.d/10-magic-sysrq.conf
-  # and switch 176 to 244
-  $ echo 244 | sudo tee /proc/sys/kernel/sysrq
-  ```
-
-  NOTE: Can't make it work, thou.
+* [What should I do when Ubuntu freezes?](http://askubuntu.com/questions/4408/what-should-i-do-when-ubuntu-freezes/36717#36717)
 
