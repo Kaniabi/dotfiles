@@ -47,6 +47,12 @@ $ sudo reboot
 * [Ubuntu 15.10 and 16.04 keep freezing randomly](http://askubuntu.com/questions/761706/ubuntu-15-10-and-16-04-keep-freezing-randomly)
 
 
+### Microsoft Keyboard
+
+```
+$ sudo sed -i -e 's/XKBOPTIONS=""/XKBOPTIONS="numpad:microsoft"/g' /etc/default/keyboard
+```
+
 ## Configure environment
 
 ### chrome (not tested)
