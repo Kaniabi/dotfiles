@@ -70,13 +70,50 @@ $ sudo dpkg -i teamviewer_amd64.deb
 $ sudo apt-get install -f
 ```
 
-### virtualbox (not tested)
+### virtualbox
 ```bash
 $ sudo apt-add-repository "deb http://download.virtualbox.org/virtualbox/debian xenial contrib"
-$ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+$ wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 $ sudo apt-get update
 $ sudo apt-get install virtualbox-5.0
 ```
+
+* Still not working on Ubuntu 16.04 with Kernel 4.7.0rc5.
+
+    * During installation we have the following message
+
+        ```
+        Starting VirtualBox kernel modules ...failed!
+          (modprobe vboxdrv failed. Please use 'dmesg' to find out why)
+        ```
+
+    * Checking
+
+        ```
+        $ VBoxManage --version
+        WARNING: The vboxdrv kernel module is not loaded. Either there is no module
+                 available for the current kernel (4.7.0-040700rc5-generic) or it failed to
+                 load. Please recompile the kernel module and install it by
+
+                 sudo /sbin/rcvboxdrv setup
+
+                 You will not be able to start VMs until this problem is fixed.
+        5.0.24r108355
+        ```
+
+    * Trying rcvboxdrv
+
+        ```
+        $ sudo /sbin/rcvboxdrv setup
+        Stopping VirtualBox kernel modules ...done.
+        Uninstalling old VirtualBox DKMS kernel modules ...done.
+        Trying to register the VirtualBox kernel modules using DKMS ...done.
+        Starting VirtualBox kernel modules ...failed!
+          (modprobe vboxdrv failed. Please use 'dmesg' to find out why)
+        ```
+
+
+
 
 ### skype
 ```bash
@@ -96,10 +133,14 @@ $ sudo apt-get install git
 ### docker
 ```bash
 $ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-$ echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+$ sudo add-apt-repository "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
 $ sudo apt-get update
-$ sudo apt-get install docker-engine
+$ sudo apt-get install docker-engine=1.11.1-0~xenial
 ```
+
+Installing latest version of docker (1.11.2) is failing with the following error:
+
+* ERROR: [Ubuntu 16.04 install for 1.11.2 hangs](https://github.com/docker/docker/issues/23347)
 
 ### system packages:
 ```bash
