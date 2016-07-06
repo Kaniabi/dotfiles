@@ -113,8 +113,6 @@ $ sudo apt-get install virtualbox-5.0
         ```
 
 
-
-
 ### skype
 ```bash
 $ sudo add-apt-repository "deb http://archive.canonical.com/ xenial partner"
@@ -136,6 +134,7 @@ $ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 
 $ sudo add-apt-repository "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
 $ sudo apt-get update
 $ sudo apt-get install docker-engine=1.11.1-0~xenial
+$ sudo apt-mark hold docker-engine
 ```
 
 Installing latest version of docker (1.11.2) is failing with the following error:
