@@ -180,6 +180,7 @@ $ .dotfiles/scripts/bootstrap
 * Register using login/password
 * Download settings from DROPBOX
 * TODO: how to automatically import/export pycharm settings?
+* [Inotify Watches Limit](https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit)
 
 ### Custom hosts names
 
