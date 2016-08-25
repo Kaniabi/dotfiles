@@ -1,0 +1,23 @@
+#!/bin/bash -e
+
+function doit {
+    COLOR='\033[0;32m'
+    RESET='\033[0m' # No Color
+    echo
+    echo -e "${COLOR}$ $1"
+    echo -e "-------------------------------------------------------------------------------------------------------------${RESET}"
+    $1
+}
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if ! git diff-index --quiet HEAD --; then
+    # Commit all changes
+    doit "git commit -am WIP"
+fi
+
+# Pushes changes to the server
+doit "git push origin $branch"
+
+# Starts the associated job.
+doit "inv job_start"

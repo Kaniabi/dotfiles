@@ -1,0 +1,40 @@
+#!/bin/bash -e
+
+function doit {
+    COLOR='\033[0;32m'
+    RESET='\033[0m' # No Color
+    echo
+    echo -e "${COLOR}$ $1"
+    echo -e "-------------------------------------------------------------------------------------------------------------${RESET}"
+    $1
+}
+
+original_branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ -n "$1" ]; then
+    # Switch to source branch
+    source_branch=$1
+    doit "git checkout $source_branch"
+else
+    source_branch=$original_branch
+fi
+
+if [ -n "$2" ]; then
+    target_branch=$2
+else
+    target_branch=master
+fi
+
+# Updates target branch
+doit "git fetch origin $target_branch:$target_branch"
+
+# Rebase
+doit "git rebase $target_branch"
+
+# Push the merged branch (forced)
+doit "git push -f origin $source_branch"
+
+if [ -n "$1" ]; then
+    # Switch back to where we were.
+    doit "git checkout $original_branch"
+fi

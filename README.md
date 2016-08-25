@@ -174,6 +174,14 @@ $ git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh
 $ .dotfiles/scripts/bootstrap
 ```
 
+
+### bullet-train (zsh)
+```bash
+$ sudo apt-get install ttf-ancient-fonts
+$ export TERM="xterm-256color"
+
+```
+
 ### pycharm
 
 * Download PROFESSIONAL version
