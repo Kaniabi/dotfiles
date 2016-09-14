@@ -33,8 +33,3 @@ doit "git rebase $target_branch"
 
 # Push the merged branch (forced)
 doit "git push -f origin $source_branch"
-
-if [ -n "$1" ]; then
-    # Switch back to where we were.
-    doit "git checkout $original_branch"
-fi
