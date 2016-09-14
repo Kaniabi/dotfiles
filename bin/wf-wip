@@ -1,19 +1,19 @@
 #!/bin/bash -e
 
 function doit {
-    COLOR='\033[0;32m'
-    RESET='\033[0m' # No Color
+    GREEN='\033[0;32m'
+    RESET='\033[0m'
     echo
-    echo -e "${COLOR}$ $1"
+    echo -e "${GREEN}$ $1"
     echo -e "-------------------------------------------------------------------------------------------------------------${RESET}"
-    $1
+    eval $1
 }
 
 branch=$(git rev-parse --abbrev-ref HEAD)
 
 if ! git diff-index --quiet HEAD --; then
     # Commit all changes
-    doit "git commit -am WIP"
+    doit "git commit -am \"fixup! WIP\""
 fi
 
 # Pushes changes to the server
