@@ -141,6 +141,16 @@ Installing latest version of docker (1.11.2) is failing with the following error
 
 * ERROR: [Ubuntu 16.04 install for 1.11.2 hangs](https://github.com/docker/docker/issues/23347)
 
+
+#### Docker without sudo
+
+* [How can I use docker without sudo?](http://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo)
+
+```bash
+$ sudo gpasswd -a ${USER} docker
+$ newgrp docker
+```
+
 ### system packages:
 ```bash
 $ sudo apt-get install zsh terminator fleet p7zip-full default-jre
