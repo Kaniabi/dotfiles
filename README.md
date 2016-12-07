@@ -243,3 +243,11 @@ net.ipv6.conf.lo.disable_ipv6 = 1
 EOF
 $ sudo sysctl -p
 ```
+
+### Installing GitHub's HUB
+
+```bash
+$ sudo add-apt-repository ppa:cpick/hub
+$ sudo apt-get update
+$ sudo apt-get install hub
+```
