@@ -221,3 +221,25 @@ $ echo 244 | sudo tee /proc/sys/kernel/sysrq
 
 * [What should I do when Ubuntu freezes?](http://askubuntu.com/questions/4408/what-should-i-do-when-ubuntu-freezes/36717#36717)
 
+### Installing kubectl
+
+http://kubernetes.io/docs/getting-started-guides/kubeadm/
+
+```bash
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee apt-key add -
+$ cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+$ apt-get update
+$ apt-get install -y kubectl
+```
+
+### Disabling IPv6
+```
+$ cat <<EOF | sudo tee -a /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+EOF
+$ sudo sysctl -p
+```
