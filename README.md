@@ -246,8 +246,11 @@ $ sudo sysctl -p
 
 ### Installing GitHub's HUB
 
+* There is no release for Ubuntu 16.10 (yakkety).
+* Reference: https://launchpad.net/~cpick/+archive/ubuntu/hub
+
 ```bash
-$ sudo add-apt-repository ppa:cpick/hub
+$ sudo apt-add-repository "deb http://ppa.launchpad.net/cpick/hub/ubuntu xenial main"
 $ sudo apt-get update
 $ sudo apt-get install hub
 ```
