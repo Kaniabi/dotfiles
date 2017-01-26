@@ -1,0 +1,39 @@
+#!/bin/bash -e
+
+function doit {
+    COLOR='\033[0;32m'
+    RESET='\033[0m' # No Color
+    echo
+    echo -e "${COLOR}$ $1"
+    echo -e "-------------------------------------------------------------------------------------------------------------${RESET}"
+    $1
+}
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Update master
+doit "git fetch origin master:master"
+
+# Rebase the branch (to make it possible for fast-forward merge)
+doit "git rebase master"
+
+# Pushes the rebased branch (so github can consider the associated PR closed).
+doit "git push -f origin $branch"
+
+# Switch to master
+doit "git checkout master"
+
+# Merge the branch on master
+doit "git merge --ff-only $branch"
+
+# Pushes master
+doit "git push origin master"
+
+# Delete the branch locally
+doit "git branch -d $branch"
+
+# Delete branch remotely
+doit "git push origin :$branch"
+
+# Delete job
+doit "inv job_delete --branch=$branch"

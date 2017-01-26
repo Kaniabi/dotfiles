@@ -13,7 +13,7 @@ branch=$(git rev-parse --abbrev-ref HEAD)
 
 if ! git diff-index --quiet HEAD --; then
     # Commit all changes
-    doit "git commit -am \"fixup! WIP\""
+    doit "git commit -am \"WIP\""
 fi
 
 # Pushes changes to the server
