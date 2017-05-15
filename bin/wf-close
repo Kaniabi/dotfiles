@@ -35,5 +35,3 @@ doit "git branch -d $branch"
 # Delete branch remotely
 doit "git push origin :$branch"
 
-# Delete job
-doit "inv job_delete --branch=$branch"
