@@ -1,0 +1,9 @@
+#!/bin/bash
+# This hook is sourced after every virtualenv is activated.
+
+PROJECT_POSTACTIVATE=$PWD/virtualenv/postactivate
+if [ -f $PROJECT_POSTACTIVATE ]; then
+  echo $PROJECT_POSTACTIVATE
+  source $PROJECT_POSTACTIVATE
+fi
+
