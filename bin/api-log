@@ -1,0 +1,2 @@
+sudo docker logs --tail=10 -f ax.api-calc 2>&1 | awk '{ print $15 "\t" $24 "\t" $17 "\t (" $27 "\t" $18}'
+
