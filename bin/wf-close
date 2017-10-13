@@ -17,9 +17,6 @@ doit "git fetch origin master:master"
 # Rebase the branch (to make it possible for fast-forward merge)
 doit "git rebase master"
 
-# Pushes the rebased branch (so github can consider the associated PR closed).
-doit "git push -f origin $branch"
-
 # Switch to master
 doit "git checkout master"
 
@@ -29,9 +26,9 @@ doit "git merge --ff-only $branch"
 # Pushes master
 doit "git push origin master"
 
-# Delete the branch locally
-doit "git branch -d $branch"
-
 # Delete branch remotely
 doit "git push origin :$branch"
+
+# Delete the branch locally
+doit "git branch -d $branch"
 
