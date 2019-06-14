@@ -1,3 +1,4 @@
+# vi:si:et:sw=4:sts=4:ts=4
 # Local/private config goes in the include
 [include]
     path = ~/.gitconfig.local
@@ -9,7 +10,7 @@
     wtf               = !$DOTFILES/bin/git-wtf
     rank-contributors = !$DOTFILES/bin/git-rank-contributors
     count             = !git shortlog -sn
-	wip               = commit -am "WIP"
+    wip               = commit -am "WIP"
 [color]
     diff = auto
     status = auto
@@ -19,6 +20,7 @@
     excludesfile = ~/.gitignore
     editor = vim
     pager =
+    filemode = false
 [apply]
     whitespace = nowarn
 [mergetool]
@@ -28,8 +30,9 @@
 [help]
     autocorrect = 0
 [push]
-	default = simple
+    default = current
 [pull]
     rebase = true
 [rebase]
     autoSquash = true
+
