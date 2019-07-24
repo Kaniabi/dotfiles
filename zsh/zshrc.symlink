@@ -47,25 +47,27 @@ export ZSH=$HOME/.oh-my-zsh
 
 export TERM="xterm-256color"
 
-export BULLETTRAIN_PROMPT_ORDER=(
-  time
-  dir
-  virtualenv
-  git
-  context
-)
-export BULLETTRAIN_VIRTUALENV_BG=58
-export BULLETTRAIN_VIRTUALENV_FG=254
-export BULLETTRAIN_DIR_BG=17
-export BULLETTRAIN_DIR_FG=254
-export BULLETTRAIN_CONTEXT_SHOW=true
-ZSH_THEME="kaniabi"
+# export BULLETTRAIN_PROMPT_ORDER=(
+#   time
+#   dir
+#   virtualenv
+#   git
+#   context
+# )
+# export BULLETTRAIN_VIRTUALENV_BG=58
+# export BULLETTRAIN_VIRTUALENV_FG=254
+# export BULLETTRAIN_DIR_BG=17
+# export BULLETTRAIN_DIR_FG=254
+# export BULLETTRAIN_CONTEXT_SHOW=true
+ZSH_THEME="kaniabi-mortalscumbag"
 
 ZSH_CUSTOM=$DOTFILES/oh-my-zsh
 
 ZSH_DISABLE_COMPFIX=true
 
-plugins=(kaniabi-git)
+# plugins=(kaniabi-git)
+
+echo "Oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
 if [ -f $HOME/.zshrc.local ]
@@ -77,3 +79,9 @@ export DOCKER_HOST='tcp://0.0.0.0:2375'
 
 source /d/Projects/unhaggle/setup.sh
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

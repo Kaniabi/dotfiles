@@ -1,4 +1,4 @@
-# Kaniabi ZSH Theme (inspired on AVIT ZSH Theme)
+kaniabi.zsh-theme# Kaniabi ZSH Theme (inspired on AVIT ZSH Theme)
 
 PROMPT='
 $(git_prompt_info) ${_current_dir}
