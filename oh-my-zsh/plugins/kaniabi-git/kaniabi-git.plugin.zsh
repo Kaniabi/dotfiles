@@ -11,6 +11,11 @@ gwip () {
     gpush
 }
 
+grev () {
+    git commit -am "REV: $*"  && \
+    gpush
+}
+
 workon () {
     if [[ $1 == "" ]]; then
         pyenv versions
@@ -33,7 +38,7 @@ gcontinue () {
     git rebase --continue
 }
 
-gc () {
+gco () {
     git checkout $*
 }
 

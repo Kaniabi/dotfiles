@@ -4,7 +4,7 @@
 [credential]
     helper = cache
 [alias]
-    lg = log --oneline --graph --decorate -n20
+    lg = log --oneline --graph --decorate -n10
     lgg = log --all --color --graph --decorate -n20 --pretty=format:'%C(yellow)%h%Creset -%C(bold yellow)%d%Creset %s %C(green)(%cr)%C(bold blue) <%an>%Creset' --abbrev-commit
     lj = log -n20 --pretty=format:'{%n"commit":"%H",%n"author":"%an",%n"author_email":"%ae",%n"date":"%ad",%n"message":"%f"%n}'
     st = status -b -s

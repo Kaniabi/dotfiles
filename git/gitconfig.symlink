@@ -11,17 +11,17 @@
     # rank-contributors = !$DOTFILES/bin/git-rank-contributors
     count             = !git shortlog -sn
     wip               = commit -am "WIP"
-    conflicts         = diff --name-only --diff-filter=U
+    conflicts         = diff --name-status --diff-filter=U
 [color]
     diff = auto
     status = auto
     branch = auto
     ui = true
 [core]
-    excludesfile = ~/.gitignore
+	excludesfile = /home/kaniabi/.gitignore
     editor = vim
     pager =
-    filemode = false
+	filemode = false
 [apply]
     whitespace = nowarn
 [mergetool]
@@ -36,4 +36,7 @@
     rebase = true
 [rebase]
     autoSquash = true
-
+[user]
+	signingkey = 464BDFA9
+[gpg]
+	program = gpg2
