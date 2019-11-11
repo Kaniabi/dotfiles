@@ -78,10 +78,10 @@ fi
 export DOCKER_HOST='tcp://0.0.0.0:2375'
 
 
-source /d/Projects/unhaggle/setup.sh
+source ~/Projects/unhaggle/setup.sh
 
-source /d/Projects/private/.env
-export $(cut -d= -f1 /d/Projects/private/.env | awk NF)
+source ~/Projects/private/.env
+export $(cut -d= -f1 ~/Projects/private/.env | awk NF)
 
 
 # NVM Settings
