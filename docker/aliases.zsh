@@ -3,7 +3,7 @@
 # alias ddi="sudo docker images"
 # alias ddps="sudo docker ps"
 
-export DEV_DOCKER_DIR=/mnt/c/Users/kania/Projects/unhaggle/dev_docker
+export DEV_DOCKER_DIR=~/Projects/unhaggle/dev_docker
 
 ddr () { docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml run "$@" }
 ddbuild () { docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml build "$@" }
