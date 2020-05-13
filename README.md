@@ -1,6 +1,6 @@
 # Development machine
 
-## Preparation
+## Install Ubuntu from USB
 
 ### Create Ubuntu 16.04 installation pendrive
 
@@ -18,8 +18,6 @@ $ sudo apt-get update
 $ sudo apt-get install unetbootin
 ```
 
-## Install OS
-
 ### Install
 
 Install Ubuntu 16.04 using the generated pendrive.
@@ -29,6 +27,59 @@ Install Ubuntu 16.04 using the generated pendrive.
 $ sudo apt-get upgrade
 $ sudo apt-get update
 ```
+
+## Install (latest) Ubunto WSL
+
+* Install OS
+
+```
+# Windows console:
+
+$ FILENAME=eoan-server-cloudimg-amd64-wsl.rootfs.tar.gz
+$ wget https://cloud-images.ubuntu.com/eoan/current/$FILENAME
+$ wsl --import Eoan d:\Eoan $FILENAME
+
+$ apt update
+$ apt upgrade
+```
+
+* Create user
+
+```
+$ wsl -d Eoan
+$ adduser kaniabi
+$ usermod -a -G sudo kaniabi
+$ sed --in-place 's/%sudo\tALL=(ALL:ALL) ALL/%sudo\tALL=(ALL:ALL) NOPASSWD:ALL/' /etc/sudoers
+$ sudo apt install zsh
+(...)
+$ su - kaniabi
+$ touch ~/.ssh/id_rsa
+$ chmod 400 ~/.ssh/id_rsa
+$ chsh zsh
+```
+
+```
+```
+
+```
+```
+
+* /etc/wsl.conf
+
+```
+# Enable extra metadata options by default
+[automount]
+enabled = true
+root = /windir/
+options = "metadata,umask=22,fmask=11"
+mountFsTab = false
+
+# Enable DNS – even though these are turned on by default, we’ll specify here just to be explicit.
+[network]
+generateHosts = true
+generateResolvConf = true
+```
+
 
 ### Update the KERNEL
 
@@ -43,6 +94,7 @@ $ sudo dpkg -i linux-headers-4.7*.deb linux-image-4.7*.deb
 $ sudo update-grub
 $ sudo reboot
 ```
+
 
 * [Ubuntu 15.10 and 16.04 keep freezing randomly](http://askubuntu.com/questions/761706/ubuntu-15-10-and-16-04-keep-freezing-randomly)
 

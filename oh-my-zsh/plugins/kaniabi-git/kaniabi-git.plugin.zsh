@@ -31,7 +31,7 @@ grom () {
 }
 
 gpush () {
-    git push --set-upstream origin $(git_current_branch) -f
+    git push --set-upstream origin "$@" $(git_current_branch)
 }
 
 gcontinue () {
@@ -57,3 +57,4 @@ gbst () {
 alias gbranches='git branch --format="%(refname:short)" | xargs git lg'
 alias grebase='git rebase --interactive --autosquash'
 alias gamend='git add -A .;git amend;gpush -f'
+alias gamendn='git add -A .;git commit -an --amend;gpush -f'

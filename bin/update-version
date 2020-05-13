@@ -1,0 +1,23 @@
+#!/bin/bash
+
+ddr () {
+        docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml run "$@"
+}
+
+
+if [[ $2 == "" ]]; then
+    echo "Usage: update-library <project> <library> <version> [<requires-filename>]"
+    exit 1
+fi
+
+PROJECT=$1
+LIBRARY=$2
+VERSION=$3
+REQUIRES_IN=${4:-requires.in}
+
+sed -i 's/$LIBRARY==.*$/$LIBRARY==$VERSION/g' $REQUIRES_IN
+
+if [[ $PROJECT != "" ]]; then
+    ddr $PROJECT-py3 update-requirements
+    ddr $PROJECT-py2 update-requirements
+fi

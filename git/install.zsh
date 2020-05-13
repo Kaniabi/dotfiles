@@ -1,4 +1,1 @@
-export GITHUB_USER=Kaniabi
-export GITHUB_TOKEN=defa281ec0ea746d470b569e4e577bcc88c2c226
-# export GITHUB_ACCESS_TOKEN=b04ea6ffb76ef8a21d603a5c6b6b60f2d5c44adf
-export PYENV_VIRTUALENV_DISABLE_PROMPT=True
+eval "$(kubectl completion zsh)"

@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+function doit {
+    GREEN='\033[0;32m'
+    RESET='\033[0m'
+    echo
+    echo -e "${GREEN}$ $1"
+    echo -e "-------------------------------------------------------------------------------------------------------------${RESET}"
+    eval $1
+}
+
+doit "mu fetch origin --prune"
+doit "mu fetch origin master:master"
+doit "mu fetch origin develop:develop"
+doit "mu pull"

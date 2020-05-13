@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+set -e
+
+source $HOME/.dotfiles/docker/aliases.zsh
+
+SCRIPT_PATH="${0%/*}"
+PROJECT_NAME="${1:-tier1_audi}"
+
+DATABASE="$PROJECT_NAME"
+PROJECT_ROOT="/d/Projects/unhaggle/$PROJECT_NAME"
+SERVICE="$DATABASE-py2"
+
+APPS=$(find . -name migrations -type d | xargs -I {} awk '{split($0,a,"/"); print a[3]}' | xargs)
+
+echo "*** Deleting migrations and pyc files"
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+find . -name "*.pyc" -delete
+
+echo "*** Drop database"
+ddr $SERVICE exec bash -c "dropdb $DATABASE;createdb $DATABASE"
+
+touch unhaggle/tests/migrations/__init__.py
+
+echo "*** Commenting out unhaggle.test from config/base.py"
+sed -i "s/'unhaggle.tests'/# 'unhaggle.tests'/g" unhaggle/config/base.py
+
+echo "*** Recreate migrations"
+echo $APPS
+ddr $SERVICE manage makemigrations --configuration=MakeMigrationScript $@
+
+echo "*** Restoring config/base.py"
+sed -i "s/# 'unhaggle.tests'/'unhaggle.tests'/g" unhaggle/config/base.py
+
+echo "*** Fixing nvd migrations"
+patch -p 1 -i $SCRIPT_PATH/remigrate_/nvd_0001_initial.patch
