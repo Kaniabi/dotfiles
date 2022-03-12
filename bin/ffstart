@@ -1,2 +1,0 @@
-#!/bin/bash
-fleetctl --tunnel=$FLEETCTL_TUNNEL start $*

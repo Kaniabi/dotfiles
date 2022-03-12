@@ -1,49 +1,18 @@
 # Development machine
 
-## Install Ubuntu from USB
+## Install Ubuntu
 
-### Create Ubuntu 16.04 installation pendrive
+* Install Ubuntu on linux using WSL2
 
-* Using Startup Disc Creator generates a 16Gb in a 2Gb pendrive.
-    * Can't write files on it (custom files);
-    * Can't create a different partition for custom files;
-    * [USB Startup Disk Creator Block Size Problem](http://askubuntu.com/questions/778660/usb-startup-disk-creator-block-size-problem)
+* Create user on the first login
 
-* The package UNetBootin version doesn't work on Ubutun 16.04.
-
-### unetbootin
-```bash
-$ sudo add-apt-repository ppa:gezakovacs/ppa
-$ sudo apt-get update
-$ sudo apt-get install unetbootin
-```
-
-### Install
-
-Install Ubuntu 16.04 using the generated pendrive.
-
-### Upgrade and Update the system
+* Upgrade and Update the system
 ```bash
 $ sudo apt-get upgrade
 $ sudo apt-get update
 ```
 
-## Install (latest) Ubunto WSL
-
-* Install OS
-
-```
-# Windows console:
-
-$ FILENAME=eoan-server-cloudimg-amd64-wsl.rootfs.tar.gz
-$ wget https://cloud-images.ubuntu.com/eoan/current/$FILENAME
-$ wsl --import Eoan d:\Eoan $FILENAME
-
-$ apt update
-$ apt upgrade
-```
-
-* Create user
+* Create user (or just configure)
 
 ```
 $ wsl -d Eoan
@@ -56,12 +25,6 @@ $ su - kaniabi
 $ touch ~/.ssh/id_rsa
 $ chmod 400 ~/.ssh/id_rsa
 $ chsh zsh
-```
-
-```
-```
-
-```
 ```
 
 * /etc/wsl.conf
@@ -163,36 +126,11 @@ $ sudo apt-get install virtualbox-5.0
         Starting VirtualBox kernel modules ...failed!
           (modprobe vboxdrv failed. Please use 'dmesg' to find out why)
         ```
-
-
-### skype
-```bash
-$ sudo add-apt-repository "deb http://archive.canonical.com/ xenial partner"
-$ sudo dpkg --add-architecture i386
-$ sudo apt-get update
-$ sudo apt-get install skype
-```
-
 ### git
-```bash
-$ sudo add-apt-repository ppa:git-core/ppa
-$ sudo apt-get update
-$ sudo apt-get install git
-```
+* Use git provided by Ubuntu OS.
 
 ### docker
-```bash
-$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-$ sudo add-apt-repository "deb https://apt.dockerproject.org/repo ubuntu-xenial main"
-$ sudo apt-get update
-$ sudo apt-get install docker-engine=1.11.1-0~xenial
-$ sudo apt-mark hold docker-engine
-```
-
-Installing latest version of docker (1.11.2) is failing with the following error:
-
-* ERROR: [Ubuntu 16.04 install for 1.11.2 hangs](https://github.com/docker/docker/issues/23347)
-
+* Use Docker Desktop
 
 #### Docker without sudo
 
@@ -206,6 +144,33 @@ $ newgrp docker
 ### system packages:
 ```bash
 $ sudo apt-get install zsh terminator fleet p7zip-full default-jre
+```
+
+### hub
+https://hub.github.com/
+
+```
+sudo add-apt-repository ppa:cpick/hub
+sudo apt update
+sudo apt install hub
+```
+
+### pyenv
+
+```
+curl https://pyenv.run | bash
+```
+
+Then, install the latest Python and the "deen" virtualenv
+
+```
+sudo apt-get update; sudo apt-get install -y make build-essential libssl-dev
+zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev \
+liblzma-dev
+
+pyenv install 3.10.2
+pyenv virtualenv 3.10.2 deen
 ```
 
 ### pip

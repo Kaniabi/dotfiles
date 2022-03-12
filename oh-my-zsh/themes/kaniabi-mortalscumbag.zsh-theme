@@ -1,30 +1,47 @@
-function my_git_prompt() {
-  REPO=$(git rev-parse --git-dir 2> /dev/null) || return
-
-  echo "%{$fg_bold[yellow]%}%}${REPO:a:h:t}%{$fg_bold[white]%} @ %{$fg_bold[yellow]%}$(my_current_branch)%{$reset_color%} : "
-}
-
 function my_current_branch() {
   echo $(git_current_branch || echo "(no branch)")
 }
 
-function ssh_connection() {
+function _bold_blue () {
+  echo "%F{blue}$1%f"
+}
+
+function _bold_green () {
+  echo "%F{green}$1%f"
+}
+
+function _prompt_ssh() {
   if [[ -n $SSH_CONNECTION ]]; then
-    echo "%{$fg_bold[red]%}(ssh) "
+    echo "%F{red}(ssh)%f"
   fi
 }
 
-function my_login() {
-  echo "%{$fg_bold[green]%}%n@%m%{$reset_color%}"
+function _prompt_git() {
+  REPO=$(git rev-parse --git-dir 2> /dev/null) || return
+  echo " git:$(_bold_blue ${REPO:a:h:t})@$(_bold_blue $(my_current_branch))"
 }
 
-function my_environment() {
-  if [[ -n $PYENV_VERSION ]]; then
-    echo " %{$fg_bold[blue]%}‹$PYENV_VERSION›%{$reset_color%}"
-  fi
+function _prompt_venv() {
+  [[ -z $PYENV_VERSION ]] && return
+  echo " pyenv:$(_bold_blue ‹$PYENV_VERSION›)"
 }
 
-ret_status="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%})%?%{$reset_color%}"
-PROMPT=$'\n$(ssh_connection)$(my_login)$(my_environment)\n$(my_git_prompt)%~\n[${ret_status}] %{$fg_bold[blue]%}λ%{$reset_color%} '
+function _prompt_terraform() {
+  if [[ ! -d .terraform ]] && return
+  local TERRAFORM_WORKSPACE="$(terraform workspace show)"
+  local COLOR=yellow
+  if [[ "$TERRAFORM_WORKSPACE" == "prod" ]] && COLOR=red;
+  if [[ "$TERRAFORM_WORKSPACE" == "stage" ]] && COLOR=green;
+  echo " terraform:%F{$COLOR}$TERRAFORM_WORKSPACE%f"
+}
+
+_prompt_login="$(_bold_green %n@%m)"
+_prompt_return_code="%(?:%{$fg_bold[green]%}:%{$fg_bold[red]%})%?%{$reset_color%}"
+
+PROMPT=$'
+$(_prompt_ssh)${_prompt_login}$(_prompt_venv)$(_prompt_git)$(_prompt_terraform)
+%~
+[${_prompt_return_code}] %{$fg_bold[blue]%}λ%{$reset_color%} '
+RPROMPT='[%*]'
 
 ZSH_THEME_PROMPT_RETURNCODE_PREFIX="%{$fg_bold[red]%}"

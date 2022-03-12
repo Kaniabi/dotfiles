@@ -3,24 +3,18 @@
 # alias ddi="sudo docker images"
 # alias ddps="sudo docker ps"
 
-export DEV_DOCKER_DIR=/d/Projects/unhaggle/dev_docker
-
 function ddr () {
-  docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml run "$@"
+  docker-compose run "$@"
 }
 
-function ddbuild () {
-  docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml build "$@"
+function ddb () {
+  docker-compose build "$@"
 }
 
 function ddup () {
-  docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml up "$@"
+  docker-compose up "$@"
 }
 
 function ddstop () {
-  docker-compose -f ${DEV_DOCKER_DIR}/dev_docker/docker-compose.yml stop "$@"
-}
-
-function ddcog () {
-  cog -r $DEV_DOCKER_DIR/dev_docker/docker-compose.yml
+  docker-compose stop "$@"
 }
