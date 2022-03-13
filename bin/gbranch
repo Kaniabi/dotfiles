@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+set -e
+
+BRANCH=$1
+if [[ -z $BRANCH ]]; then
+  git branch -av
+fi

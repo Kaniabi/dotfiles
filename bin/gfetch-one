@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+set -e
+
+function my_git() { git -C $REPO "$@" }
+
+echo "* $1"
+
+REPO=$1
+
+DOTFILES_BRANCHES=(main master develop production release stage staging)
+CURRENT_BRANCH=$(my_git rev-parse --abbrev-ref HEAD)
+
+my_git fetch -q origin
+my_git branch --list $DOTFILES_BRANCHES  \
+  | gawk '$1 != "*" { printf("%s:%s\n", $1, $1) }'  \
+  | my_git fetch --quiet --prune origin --stdin

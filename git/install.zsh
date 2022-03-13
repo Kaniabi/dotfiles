@@ -3,4 +3,7 @@
 #sudo apt update
 #sudo apt install -q --upgrade git
 
-eval "$(kubectl completion zsh)"
+function gfetch() {
+  local REPOS=$(find -name .git | xargs realpath | xargs dirname | grep -v "\.")
+  parallel gfetch-one ::: $REPOS
+}
