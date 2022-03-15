@@ -6,19 +6,23 @@ function _bold_blue () {
   echo "%F{blue}$1%f"
 }
 
+function _bold_yellow () {
+  echo "$fg_bold[yellow]$1$reset_color"
+}
+
 function _bold_green () {
   echo "%F{green}$1%f"
 }
 
 function _prompt_ssh() {
   if [[ -n $SSH_CONNECTION ]]; then
-    echo "%F{red}(ssh)%f"
+    echo "$fg_bold[red](ssh)%f"
   fi
 }
 
 function _prompt_git() {
   REPO=$(git rev-parse --git-dir 2> /dev/null) || return
-  echo " git:$(_bold_blue ${REPO:a:h:t})@$(_bold_blue $(my_current_branch))"
+  echo " git:$(_bold_blue ${REPO:a:h:t})@$(_bold_yellow $(my_current_branch))"
 }
 
 function _prompt_venv() {

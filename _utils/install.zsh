@@ -20,3 +20,8 @@ function url_install_cmd () {
     curl -o- $URL | bash
   fi
 }
+
+function die () {
+  echo $1
+  exit 99
+}

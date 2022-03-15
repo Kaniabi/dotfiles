@@ -55,7 +55,6 @@ export TERM="xterm-256color"
 ZSH_THEME="kaniabi-mortalscumbag"
 ZSH_CUSTOM=$DOTFILES/oh-my-zsh
 ZSH_DISABLE_COMPFIX=true
-# plugins=(kaniabi-git)
 
 export DOCKER_HOST='tcp://0.0.0.0:2375'
 
