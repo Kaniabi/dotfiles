@@ -60,7 +60,7 @@ export DOCKER_HOST='tcp://0.0.0.0:2375'
 
 source_it "$ZSH/oh-my-zsh.sh"
 source_it $HOME/.zshrc.local
-source_it "$HOME/projects/private/.env"
+source_it "$HOME/projects/private/private.env"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
