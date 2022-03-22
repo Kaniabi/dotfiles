@@ -56,8 +56,6 @@ ZSH_THEME="kaniabi-mortalscumbag"
 ZSH_CUSTOM=$DOTFILES/oh-my-zsh
 ZSH_DISABLE_COMPFIX=true
 
-export DOCKER_HOST='tcp://0.0.0.0:2375'
-
 source_it "$ZSH/oh-my-zsh.sh"
 source_it $HOME/.zshrc.local
 source_it "$HOME/projects/private/private.env"

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+
+function die () {
+  echo $1
+  exit 99
+}
+
+DOCKER_COMPOSE_PATH=""
+for i in . ./docker ./dev_docker; do
+  if [[ -f $i/docker-compose.yml ]]; then
+    DOCKER_COMPOSE_PATH=$i
+    continue
+  fi
+done
+
+if [[ -z $DOCKER_COMPOSE_PATH ]]; then
+  die "ddbuild: Can't find docker-compose.yml."
+fi
+
+DOCKER_COMPOSE_ARGS="-f $DOCKER_COMPOSE_PATH/docker-compose.yml"
+if [[ -f $DOCKER_COMPOSE_PATH/docker-compose.dev.yml ]]; then
+  DOCKER_COMPOSE_ARGS="$DOCKER_COMPOSE_ARGS -f $DOCKER_COMPOSE_PATH/docker-compose.dev.yml"
+fi
+
+docker-compose $DOCKER_COMPOSE_ARGS "$@"
