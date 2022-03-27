@@ -1,10 +1,15 @@
 #!/usr/bin/env zsh
 
+autoload colors
+colors
+
 set -e
 
-function my_git() { git -C $REPO "$@" }
+function my_git() {
+  git -C $REPO "$@"
+}
 
-echo "* $1"
+echo "* `realpath --relative-to=$PWD $1`"
 
 REPO=$1
 
@@ -15,4 +20,4 @@ my_git fetch -q origin
 my_git branch --list $DOTFILES_BRANCHES  \
   | gawk '$1 != "*" { printf("%s:%s\n", $1, $1) }'  \
   | my_git fetch --quiet --prune origin --stdin
-my_git pull
+my_git pull -q

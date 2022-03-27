@@ -11,13 +11,20 @@ alias gbranches='git branch --format="%(refname:short)" | xargs git lg'
 alias grebase='git rebase --interactive --autosquash'
 
 function gwip() {
-    git commit -am "WIP: $*"  && \
-    gpush
+  git commit -am "WIP: $*"  && \
+  gpush
 }
 
 function grev () {
-    git commit -am "REV: $*"  && \
-    gpush
+  git commit -am "REV: $*"  && \
+  gpush
+}
+
+function gsquash () {
+  [[ -z "$1" ]] && die "Usage: gsquash <BRANCH>"
+  local HEAD=$(git rev-parse HEAD)
+  git reset --hard $1
+  git merge --squash $HEAD
 }
 
 function workon () {
@@ -64,27 +71,34 @@ function gamend() {
   git commit --amend --no-edit --all
 }
 
-function grepos() {
-  find -name .git | xargs realpath | xargs dirname | grep -v "\."
-}
-
-function ggst() {
-  REPOS=$(grepos)
-  for i_repo in ${(f)REPOS}; do
-    echo "********************************************************************* $(basename $i_repo)"
-    git -C $i_repo st
-  done
+function ggrepos() {
+  find -name .git | xargs realpath | xargs dirname | grep -v "\." | sort
 }
 
 function ggfetch() {
-  REPOS=$(grepos)
+  REPOS=$(ggrepos)
   parallel gfetch ::: $REPOS
 }
 
 function ggpull() {
-  REPOS=$(grepos)
+  REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
     echo "********************************************************************* $(basename $i_repo)"
     git -C $i_repo pull
+  done
+}
+function ggst() {
+  REPOS=$(ggrepos)
+  for i_repo in ${(f)REPOS}; do
+    echo -n "`realpath --relative-to=$PWD $i_repo`  "
+    git -C $i_repo st  # | tail -n +2
+  done
+}
+
+function gg() {
+  REPOS=$(ggrepos)
+  for i_repo in ${(f)REPOS}; do
+    echo "********************************************************************* $(basename $i_repo)"
+    git -C $i_repo "$@"
   done
 }
