@@ -32,6 +32,6 @@ function dpsa () {
 }
 
 function dcls () {
-  docker ps | gawk '{print $1}' | xargs docker kill
-  docker ps -a | grep "Exited " | gawk '{print $1}' | xargs docker rm
+  docker ps --quiet | xargs docker kill  || true
+  docker ps --quiet -a | xargs docker rm
 }
