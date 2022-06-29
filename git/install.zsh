@@ -45,60 +45,64 @@ function gb () {
   git branch --format="%(refname:short)"
 }
 
+function ggb () {
+  git branch -v
+}
+
 function gbst () {
   for i_branch in $( gb ); do printf "$i_branch "; hub ci-status $i_branch; done;
 }
 
-function gretag() {
+function gretag () {
   [[ -z $1 ]] && die "Usage: gretag <TAG>"
-  git tag -d $1
-  git tag $1
-  git push origin --force $1
+  hub tag -d $1
+  hub tag $1
+  hub push origin --force $1
 }
 
-function gpush() {
-  git push --set-upstream origin "$@" $(git_current_branch)
+function gpush () {
+  hub push --set-upstream origin "$@" $(git_current_branch)
 }
 
-function gpull() {
-  git pull
+function gpull () {
+  hub pull
 }
 
 # alias gamend='git add -A .;git amend;gpush -f'
 # alias gamendn='git add -A .;git commit -an --amend;gpush -f'
-function gamend() {
-  git add -A .
-  git commit --amend --no-edit --all
+function gamend () {
+  hub add -A .
+  hub commit --amend --no-edit --all
 }
 
-function ggrepos() {
+function ggrepos () {
   find -name .git | xargs realpath | xargs dirname | grep -v "\." | sort
 }
 
-function ggfetch() {
+function ggfetch () {
   REPOS=$(ggrepos)
   parallel gfetch ::: $REPOS
 }
 
-function ggpull() {
+function ggpull () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
     echo "********************************************************************* $(basename $i_repo)"
-    git -C $i_repo pull
+    hub -C $i_repo pull
   done
 }
-function ggst() {
+function ggst () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
     echo -n "`realpath --relative-to=$PWD $i_repo`  "
-    git -C $i_repo st  # | tail -n +2
+    hub -C $i_repo st  # | tail -n +2
   done
 }
 
-function gg() {
+function gg () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
     echo "********************************************************************* $(basename $i_repo)"
-    git -C $i_repo "$@"
+    hub -C $i_repo "$@"
   done
 }

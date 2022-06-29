@@ -3,7 +3,7 @@
 [include]
     path = ~/.gitconfig.local
 [hub]
-    protocol = https
+	protocol = git
 [alias]
     co                = checkout
     # promote           = !$DOTFILES/bin/git-promote
