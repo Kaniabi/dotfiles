@@ -21,6 +21,14 @@ function url_install_cmd () {
   fi
 }
 
+function source_it () {
+  if [[ ! -f $1 ]]; then
+    return
+  fi
+  echo "$1"
+  source $1
+}
+
 function die () {
   echo $1
   exit 99

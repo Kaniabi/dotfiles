@@ -1,6 +1,9 @@
 if [[ ! -d ~/.pyenv ]]; then
   echo "pyenv: Installing..."
-  git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+  git clone https://github.com/pyenv/pyenv.git             ~/.pyenv
+  git clone https://github.com/pyenv/pyenv-virtualenv.git  $(pyenv root)/plugins/pyenv-virtualenv
+  pyenv install 3.11.3
+  pyenv virtualenv 3.11.3 deen
 fi
 
 function rmpyc () {
