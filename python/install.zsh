@@ -16,4 +16,4 @@ eval "$(pyenv virtualenv-init -)"
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-pyenv shell deen | true
+pyenv shell deen || true
