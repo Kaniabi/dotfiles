@@ -1,5 +1,3 @@
-exec > >(tee $HOME/.dotfiles/dotfiles.log) 2>&1
-
 if (( ! $+commands[hub] ))
 then
   echo "hub: Installing..."

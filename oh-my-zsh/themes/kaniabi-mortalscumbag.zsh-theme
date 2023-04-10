@@ -48,6 +48,6 @@ PROMPT=$'
 $(_prompt_ssh)${_prompt_login}$(_prompt_venv)$(_prompt_git)$(_prompt_terraform)
 %~
 [${_prompt_return_code}] %{$fg_bold[blue]%}λ%{$reset_color%} '
-RPROMPT='[%*]'
+# RPROMPT='[%*]'
 
 ZSH_THEME_PROMPT_RETURNCODE_PREFIX="%{$fg_bold[red]%}"
