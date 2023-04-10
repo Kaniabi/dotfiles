@@ -21,7 +21,7 @@ function grev () {
 }
 
 function gsquash () {
-  [[ -z "$1" ]] && die "Usage: gsquash <BRANCH>"
+  [[ -z "$1" ]] && echo "Usage: gsquash <BRANCH>" && return 9
   local HEAD=$(git rev-parse HEAD)
   git reset --hard $1
   git merge --squash $HEAD
@@ -42,11 +42,11 @@ function grom () {
 }
 
 function gb () {
-  git branch --format="%(refname:short)"
+  git branch -v  ## --format="%(refname:short)"
 }
 
 function ggb () {
-  git branch -v
+  git branch -av
 }
 
 function gbst () {

@@ -38,5 +38,7 @@
     autoSquash = true
 [user]
 	signingkey = 464BDFA9
+	name = Alexandre Andrade
+	email = kaniabi@gmail.com
 [gpg]
 	program = gpg2

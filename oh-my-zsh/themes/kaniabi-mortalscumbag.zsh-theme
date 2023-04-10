@@ -33,9 +33,11 @@ function _prompt_venv() {
 function _prompt_terraform() {
   if [[ ! -d .terraform ]] && return
   local TERRAFORM_WORKSPACE="$(terraform workspace show)"
-  local COLOR=yellow
+  local COLOR=blue
   if [[ "$TERRAFORM_WORKSPACE" == "prod" ]] && COLOR=red;
-  if [[ "$TERRAFORM_WORKSPACE" == "stage" ]] && COLOR=green;
+  if [[ "$TERRAFORM_WORKSPACE" == "stage" ]] && COLOR=yellow;
+  if [[ "$TERRAFORM_WORKSPACE" == "qa" ]] && COLOR=yellow;
+  if [[ "$TERRAFORM_WORKSPACE" == "dev" ]] && COLOR=green;
   echo " terraform:%F{$COLOR}$TERRAFORM_WORKSPACE%f"
 }
 
