@@ -76,7 +76,7 @@ function gamend () {
 }
 
 function ggrepos () {
-  find -name .git | xargs realpath | xargs dirname | grep -v "\." | sort
+  find -name .git | xargs realpath --relative-to=$PWD | xargs dirname | grep -v "\." | sort
 }
 
 function ggfetch () {
@@ -87,7 +87,7 @@ function ggfetch () {
 function ggpull () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    echo "********************************************************************* $(basename $i_repo)"
+    echo "********************************************************************* $i_repo"
     hub -C $i_repo pull
   done
 }
@@ -102,7 +102,7 @@ function ggst () {
 function gg () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    echo "********************************************************************* $(basename $i_repo)"
+    echo "********************************************************************* $i_repo"
     hub -C $i_repo "$@"
   done
 }

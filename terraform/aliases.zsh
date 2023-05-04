@@ -12,6 +12,10 @@ function tfpp () {
   echo "file://$TFPLAN_FILENAME"
 }
 
+function tfshow () {
+  terraform show .terraform/tfplan.bin
+}
+
 function tfrepos () {
   find -name .terraform | xargs realpath | xargs dirname | grep -v "\."
 }
