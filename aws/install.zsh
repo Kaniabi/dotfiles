@@ -31,3 +31,7 @@ if [[ $(uname) != "Darwin" ]]; then
     sudo chmod +x /usr/local/bin/ecs-cli
   fi
 fi
+
+function awsin () {
+  aws sso login --profile=$1
+}
