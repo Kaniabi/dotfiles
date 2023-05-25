@@ -1,9 +1,27 @@
-alias tf="terraform"
 alias tfi="terraform init"
 alias tfd="terraform destroy"
-alias tfa="terraform apply"
-alias tfp="terraform plan"
 alias tfw="terraform workspace select"
+
+function tf () {
+  if [[ -d "tfvars" ]]; then
+    local PROJECT=$(basename $PWD)
+    PROJECT=${PROJECT%%-*}
+    local WORKSPACE=$(terraform workspace show)
+    local _AWS_PROFILE=mi-$WORKSPACE
+    echo AWS_PROFILE=$_AWS_PROFILE $CMD -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
+    AWS_PROFILE=$_AWS_PROFILE terraform ${@} -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
+  else
+    terraform ${@}
+  fi
+}
+
+function tfp() {
+  tf plan $@
+}
+
+function tfa() {
+  tf apply $@
+}
 
 function tfpp () {
   local TFPLAN_FILENAME=~/autosync/_work/tfplans/$(basename $PWD)-$(terraform workspace show).tfplan
