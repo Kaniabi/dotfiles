@@ -1,5 +1,4 @@
 alias tfi="terraform init"
-alias tfd="terraform destroy"
 alias tfw="terraform workspace select"
 
 function tf () {
@@ -21,6 +20,10 @@ function tfp() {
 
 function tfa() {
   tf apply $@
+}
+
+function tfd () {
+  tf destroy $@
 }
 
 function tfpp () {
