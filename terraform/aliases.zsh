@@ -3,23 +3,77 @@ alias tfw="terraform workspace select"
 
 function tf () {
   if [[ -d "tfvars" ]]; then
-    local PROJECT=$(basename $PWD)
-    PROJECT=${PROJECT%%-*}
     local WORKSPACE=$(terraform workspace show)
+    local DIRNAME=$(basename $PWD)
+    local PROJECT=${DIRNAME%%-*}
+    if [[ ! "sandbox,dev,stage,qa,prod" =~ (,|^)$WORKSPACE(,|$) ]]; then
+      WORKSPACE=dev
+    fi
     local _AWS_PROFILE=mi-$WORKSPACE
-    echo AWS_PROFILE=$_AWS_PROFILE $CMD -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
-    AWS_PROFILE=$_AWS_PROFILE terraform ${@} -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
+    if [[ "$WORKSPACE" == "prod" ]]; then
+      case $DIRNAME in
+        "t3can-cluster")
+          _AWS_PROFILE=tier3_cluster
+          ;;
+        "t3usa-cluster")
+          _AWS_PROFILE=tier3_cluster
+          ;;
+        *)
+          _AWS_PROFILE=${DIRNAME/-/_}
+          ;;
+      esac
+    fi
+    echo AWS_PROFILE=$_AWS_PROFILE terraform "${@}" -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
+    AWS_PROFILE=$_AWS_PROFILE terraform "${@}" -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
   else
     terraform ${@}
   fi
 }
 
+function _tf() {
+  if [[ ! -d "tfvars" ]]; then
+    terraform "$@"
+    return
+  fi
+
+  if [[ -z "$2" ]]; then
+    echo "Usage: _tf <CMD> <WORKSPACE> <*PARAMS>"
+    echo "Availabe workspaces:"
+    ls -1 './tfvars' | gawk '{ sub(/.tfvars/, "", $1); print("  *", $1) }'
+    return 0
+  fi
+  local CMD=$1
+  local VAR_FILENAME=$2
+  shift 2
+  local CLUSTER="$(cut -d'-' -f1 <<<$VAR_FILENAME)-cluster"
+  local WORKSPACE=$(cut -d'-' -f2 <<<$VAR_FILENAME)
+
+  # Switch workspace if needed.
+  local WORKSPACE_CURRENT=$(terraform workspace show)
+  if [[ "$WORKSPACE" != "$WORKSPACE_CURRENT" ]]; then
+    echo "Switching Terraform workspace to $WORKSPACE."
+    terraform workspace select "$WORKSPACE"
+  fi
+  WORKSPACE_CURRENT=$(terraform workspace show)
+  if [[ "$WORKSPACE" != "$WORKSPACE_CURRENT" ]]; then
+    echo "ERROR: Terraform workspaces switch failed. Desired: $WORKSPACE, Current: $WORKSPACE_CURRENT."
+    return 9
+  fi
+
+  echo terraform $CMD -var-file "./tfvars/$VAR_FILENAME.tfvars" "$@"
+  terraform $CMD -var-file "./tfvars/$VAR_FILENAME.tfvars" "$@"
+}
+
 function tfp() {
-  tf plan $@
+  _tf plan "$@"
 }
 
 function tfa() {
-  tf apply $@
+  _tf apply "$@"
+}
+
+function tfd() {
+  _tf destroy "$@"
 }
 
 function tfd () {
