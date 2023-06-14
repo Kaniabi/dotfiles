@@ -1,35 +1,6 @@
 alias tfi="terraform init"
 alias tfw="terraform workspace select"
 
-function tf () {
-  if [[ -d "tfvars" ]]; then
-    local WORKSPACE=$(terraform workspace show)
-    local DIRNAME=$(basename $PWD)
-    local PROJECT=${DIRNAME%%-*}
-    if [[ ! "sandbox,dev,stage,qa,prod" =~ (,|^)$WORKSPACE(,|$) ]]; then
-      WORKSPACE=dev
-    fi
-    local _AWS_PROFILE=mi-$WORKSPACE
-    if [[ "$WORKSPACE" == "prod" ]]; then
-      case $DIRNAME in
-        "t3can-cluster")
-          _AWS_PROFILE=tier3_cluster
-          ;;
-        "t3usa-cluster")
-          _AWS_PROFILE=tier3_cluster
-          ;;
-        *)
-          _AWS_PROFILE=${DIRNAME/-/_}
-          ;;
-      esac
-    fi
-    echo AWS_PROFILE=$_AWS_PROFILE terraform "${@}" -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
-    AWS_PROFILE=$_AWS_PROFILE terraform "${@}" -var-file tfvars/$PROJECT-$WORKSPACE.tfvars
-  else
-    terraform ${@}
-  fi
-}
-
 function _tf() {
   if [[ ! -d "tfvars" ]]; then
     terraform "$@"
@@ -45,15 +16,16 @@ function _tf() {
   local CMD=$1
   local VAR_FILENAME=$2
   shift 2
-  local CLUSTER="$(cut -d'-' -f1 <<<$VAR_FILENAME)-cluster"
-  local WORKSPACE=$(cut -d'-' -f2 <<<$VAR_FILENAME)
+
+  local CLUSTER=${VAR_FILENAME%%-*}
+  echo "CLUSTER=$CLUSTER"
+
+  local WORKSPACE=${VAR_FILENAME#*-}
+  echo "WORKSPACE=$WORKSPACE"
 
   # Switch workspace if needed.
   local WORKSPACE_CURRENT=$(terraform workspace show)
-  if [[ "$WORKSPACE" != "$WORKSPACE_CURRENT" ]]; then
-    echo "Switching Terraform workspace to $WORKSPACE."
-    terraform workspace select "$WORKSPACE"
-  fi
+  terraform workspace select "$WORKSPACE"
   WORKSPACE_CURRENT=$(terraform workspace show)
   if [[ "$WORKSPACE" != "$WORKSPACE_CURRENT" ]]; then
     echo "ERROR: Terraform workspaces switch failed. Desired: $WORKSPACE, Current: $WORKSPACE_CURRENT."
