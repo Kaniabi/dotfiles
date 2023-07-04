@@ -48,10 +48,6 @@ function tfd() {
   _tf destroy "$@"
 }
 
-function tfd () {
-  tf destroy $@
-}
-
 function tfpp () {
   local TFPLAN_FILENAME=~/autosync/_work/tfplans/$(basename $PWD)-$(terraform workspace show).tfplan
   terraform -chdir=${1:-.} init
