@@ -7,6 +7,11 @@
 # zstyle -s ":vcs_info:git:*:-all-" "command" _omz_git_git_cmd
 # : ${_omz_git_git_cmd:=git}
 
+if [[ ! -f /usr/local/bin/git-filter-repo ]]; then
+  sudo wget https://raw.githubusercontent.com/newren/git-filter-repo/main/git-filter-repo -O /usr/local/bin/git-filter-repo
+  sudo chmod +x /usr/local/bin/git-filter-repo
+fi
+
 alias gbranches='git branch --format="%(refname:short)" | xargs git lg'
 alias grebase='git rebase --interactive --autosquash'
 

@@ -10,10 +10,14 @@ function rmpyc () {
   find . -name "*.pyc" -delete
 }
 
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [[ -d ~/projects/deen ]]; then
+  source ~/projects/deen/bin/activate
+else
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 
-export VIRTUAL_ENV_DISABLE_PROMPT=1
+  export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-pyenv shell deen || true
+  pyenv shell deen || true
+fi
