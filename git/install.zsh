@@ -20,6 +20,10 @@ function gwip() {
   gpush
 }
 
+function gshow() {
+  git show --name-status "$@"
+}
+
 function grev () {
   git commit -am "REV: $*"  && \
   gpush

@@ -1,5 +1,12 @@
 alias tfi="terraform init"
-alias tfw="terraform workspace select"
+
+function tfw () {
+  if [[ -z $1 ]]; then
+    terraform workspace list
+  else
+    terraform workspace select "$@"
+  fi
+}
 
 function _tf() {
   if [[ ! -d "tfvars" ]]; then
@@ -19,17 +26,23 @@ function _tf() {
 
   local CLUSTER=${VAR_FILENAME%%-*}
   echo "CLUSTER=$CLUSTER"
-
-  local WORKSPACE=${VAR_FILENAME#*-}
-  echo "WORKSPACE=$WORKSPACE"
+  if terraform workspace list | grep -w "$VAR_FILENAME" >> /dev/null 2>&1; then
+    local WORKSPACE=$VAR_FILENAME
+    echo "WORKSPACE=$WORKSPACE"
+  else
+    local WORKSPACE=${VAR_FILENAME#*-}
+    echo "WORKSPACE=$WORKSPACE"
+  fi
 
   # Switch workspace if needed.
   local WORKSPACE_CURRENT=$(terraform workspace show)
-  terraform workspace select "$WORKSPACE"
-  WORKSPACE_CURRENT=$(terraform workspace show)
-  if [[ "$WORKSPACE" != "$WORKSPACE_CURRENT" ]]; then
-    echo "ERROR: Terraform workspaces switch failed. Desired: $WORKSPACE, Current: $WORKSPACE_CURRENT."
-    return 9
+  if [[ "$WORKSPACE_CURRENT" != "$WORKSPACE" ]]; then
+    terraform workspace select "$WORKSPACE"
+    WORKSPACE_CURRENT=$(terraform workspace show)
+    if [[ "$WORKSPACE_CURRENT" != "$WORKSPACE" ]]; then
+      echo "ERROR: Terraform workspaces switch failed. Desired: $WORKSPACE, Current: $WORKSPACE_CURRENT."
+      return 9
+    fi
   fi
 
   echo terraform $CMD -var-file "./tfvars/$VAR_FILENAME.tfvars" "$@"

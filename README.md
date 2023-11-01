@@ -271,3 +271,34 @@ $ sudo apt-add-repository "deb http://ppa.launchpad.net/cpick/hub/ubuntu xenial 
 $ sudo apt-get update
 $ sudo apt-get install hub
 ```
+
+```
+sudo apt update
+sudo apt install -y git vim zsh unzip wget python3-pip
+cd $HOME
+
+chsh -s /usr/bin/zsh kaniabi
+
+# Private key (to access dotfiles git repo on github)
+install -d --mode=700 $HOME/.ssh
+vim .ssh/id_rsa
+chmod 400 .ssh/id_rsa
+
+# Dotfiles
+mkdir -p projects
+git clone git@github.com:kaniabi/dotfiles projects/dotfiles
+ln -s projects/dotfiles $HOME/.dotfiles
+$HOME/.dotfiles/script/bootstrap
+
+# Locales
+sudo apt install -y locales
+sudo locale-gen --purge "en_US.UTF-8"
+echo "locales locales/default_environment_locale select en_US.UTF-8" | sudo debconf-set-selections
+echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | sudo debconf-set-selections
+sudo dpkg-reconfigure --frontend noninteractive locales
+
+# Python install with pyenv
+sudo apt install wget build-essential libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev liblzma-dev
+pyenv install 3.11.6
+pyenv virtualenv 3.11.6 deen
+```

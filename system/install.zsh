@@ -2,3 +2,22 @@ if [[ $(uname) != "Darwin" ]]; then
   apt_install_cmd parallel
   apt_install_cmd ag silversearcher-ag
 fi
+
+if (( ! $+commands[unzip] ))
+then
+  apt_install_cmd unzip
+fi
+
+if (( ! $+commands[wget] ))
+then
+  apt_install_cmd wget
+fi
+
+if (( ! $+commands[locale-gen] ))
+then
+  sudo apt install locales
+  sudo locale-gen en_US.UTF-8
+  echo "locales locales/default_environment_locale select en_US.UTF-8" | sudo debconf-set-selections
+  echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | sudo debconf-set-selections
+  sudo dpkg-reconfigure --frontend noninteractive locales
+fi

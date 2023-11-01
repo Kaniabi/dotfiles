@@ -1,4 +1,4 @@
 function za () {
-  zops anatomy apply .
-  terraform fmt
+  zops anatomy apply ${1:-.}
+  terraform fmt ${1:-.}
 }
