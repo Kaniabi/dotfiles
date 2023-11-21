@@ -42,3 +42,5 @@
 	email = kaniabi@gmail.com
 [gpg]
 	program = gpg2
+[ini]
+	defaultBranch = main

@@ -2,6 +2,10 @@ export AUTOSYNC_DIR=$HOME/autosync
 export AUTOSYNC_DATA=$AUTOSYNC_DIR/_data
 export DATA_DIR=$AUTOSYNC_DIR/_data
 
+# Configuration for as-core-service
+export AS_CORE_SERVICE_ROOT_DIR=$HOME/autosync/as/core_service
+export AS_CORE_SERVICE_USER_SECRETS_DIR=$AS_CORE_SERVICE_ROOT_DIR/.secrets
+
 def _setup_mi_vars () {
   local VAR_NAME=${1#*/}
   VAR_NAME=${VAR_NAME:u}
