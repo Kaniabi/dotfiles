@@ -85,7 +85,7 @@ function gamend () {
 }
 
 function ggrepos () {
-  find . -name .git | xargs realpath --relative-to=$PWD | xargs -I{} dirname {} | grep -v "\." | sort
+  find . -name .git | xargs realpath --relative-to=$PWD | xargs -I{} dirname {} | sort
 }
 
 function ggfetch () {
