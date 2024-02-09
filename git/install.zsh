@@ -51,11 +51,9 @@ function grom () {
 }
 
 function gb () {
-  git branch -v  ## --format="%(refname:short)"
-}
-
-function ggb () {
-  git branch -av
+  git for-each-ref  \
+    --sort=committerdate refs/heads/ \
+    --format='%(color:yellow)%(align:width=32)%(refname:lstrip=2)%(end)%(color:reset): %(contents:subject) %(color:green)(%(committerdate:relative))%(color:blue) %(authorname)%(color:reset)'
 }
 
 function gbst () {
@@ -85,7 +83,7 @@ function gamend () {
 }
 
 function ggrepos () {
-  find . -name .git | xargs realpath --relative-to=$PWD | xargs -I{} dirname {} | sort
+  find . -name .git | xargs dirname | grep -v "/\." | sort
 }
 
 function ggfetch () {
@@ -115,3 +113,8 @@ function gg () {
     hub -C $i_repo "$@"
   done
 }
+
+function gdiff() {
+  git diff --name-status "${@:-master}"
+}
+

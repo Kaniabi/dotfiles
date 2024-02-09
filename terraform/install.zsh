@@ -7,7 +7,7 @@ if [[ ! -d "$HOME/.tfenv/bin" ]]; then
   tfenv use
 fi
 
-if (( ! $+commands[terraform-config-inspect] ))
+if (( ! $+commands[terraform-config-inspect] )); then
   echo "terraform-config-inspect: Installing..."
   go install github.com/hashicorp/terraform-config-inspect@latest
 fi

@@ -1,5 +1,3 @@
-alias tfi="terraform init"
-
 function tfw () {
   if [[ -z $1 ]]; then
     terraform workspace list
@@ -8,30 +6,65 @@ function tfw () {
   fi
 }
 
+function _tf_usage () {
+  echo "
+Usage:
+  _tf init
+  _tf <CMD> <WORKSPACE> <*PARAMS>
+Availabe workspaces:
+$(ls -1 './tfvars' | gawk '{ sub(/.tfvars/, "", $1); print("  *", $1) }')
+"
+  exit 0
+}
+
+function _tf_title () {
+  COLOR='\033[0;34m'
+  RESET='\033[0m'
+  echo -e "${COLOR}tf: ************************************************************************ $*${RESET}"
+}
+
+
 function _tf() {
+  # Case 1: No tfvars: just run the terraform command.
   if [[ ! -d "tfvars" ]]; then
+    _tf_title "Checking tfvars: ./tfvars not found. Running terraform."
     terraform "$@"
+    return
+  else
+    _tf_title "Checking tfvars: ./tfvars directory found. Using tfvars."
+  fi
+
+  # Case 2: localbin directory: run the local bin script
+  local CMD=$1
+  LOCALBIN_CMD="bin/%CMD"
+  if [[ -f $LOCALBIN_CMD ]]; then
+    _tf_title "Checking localbin: ./bin found. Running $LOCALBIN_CMD"
+    return 0
+  else
+    _tf_title "Checking localbin: ./bin directory not found. Not using localbin."
+  fi
+
+  if [[ "$CMD" == "init" ]]; then
+    _tf_title "Checking init command: Running terraform init."
+    terraform init
     return
   fi
 
-  if [[ -z "$2" ]]; then
-    echo "Usage: _tf <CMD> <WORKSPACE> <*PARAMS>"
-    echo "Availabe workspaces:"
-    ls -1 './tfvars' | gawk '{ sub(/.tfvars/, "", $1); print("  *", $1) }'
-    return 0
-  fi
-  local CMD=$1
+  # Cluster
   local VAR_FILENAME=$2
   shift 2
-
   local CLUSTER=${VAR_FILENAME%%-*}
-  echo "CLUSTER=$CLUSTER"
+  _tf_title "CLUSTER=$CLUSTER"
+
+  # Workspace: we have variations, the new one with `app-env` and the old one
+  # with only `env`.
+  _tf_title "Checking workspace variation: app-env vs env"
   if terraform workspace list | grep -w "$VAR_FILENAME" >> /dev/null 2>&1; then
     local WORKSPACE=$VAR_FILENAME
-    echo "WORKSPACE=$WORKSPACE"
+    _tf_title "WORKSPACE=$WORKSPACE"
   else
     local WORKSPACE=${VAR_FILENAME#*-}
-    echo "WORKSPACE=$WORKSPACE"
+    _tf_title "WORKSPACE=$WORKSPACE"
   fi
 
   # Switch workspace if needed.
@@ -40,13 +73,17 @@ function _tf() {
     terraform workspace select "$WORKSPACE"
     WORKSPACE_CURRENT=$(terraform workspace show)
     if [[ "$WORKSPACE_CURRENT" != "$WORKSPACE" ]]; then
-      echo "ERROR: Terraform workspaces switch failed. Desired: $WORKSPACE, Current: $WORKSPACE_CURRENT."
+      _tf_title "ERROR: Terraform workspaces switch failed. Desired: $WORKSPACE, Current: $WORKSPACE_CURRENT."
       return 9
     fi
   fi
 
   echo terraform $CMD -var-file "./tfvars/$VAR_FILENAME.tfvars" "$@"
   terraform $CMD -var-file "./tfvars/$VAR_FILENAME.tfvars" "$@"
+}
+
+function tfi() {
+  _tf init "$@"
 }
 
 function tfp() {
