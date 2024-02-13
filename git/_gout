@@ -1,0 +1,12 @@
+#compdef gout
+
+_git_branches() {
+   # Use git to list local branches in the current repository
+   local branches
+   branches=($(git branch --list | sed 's/^\* //'))
+
+   # Provide completion options for branches
+   _wanted branches expl 'available Git branches' compadd -a branches
+}
+
+compdef _git_branches gout
