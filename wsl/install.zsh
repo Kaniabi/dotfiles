@@ -5,7 +5,7 @@ declare -a BROWSERS=(
 )
 for i_browser in $BROWSERS; do
   if [[ -f "$i_browser" ]]; then
-    export BROWSER="'$i_browser'"
+    export BROWSER="$i_browser"
     break
   fi
 done

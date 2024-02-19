@@ -6,7 +6,7 @@ export DATA_DIR=$AUTOSYNC_DIR/_data
 export AS_CORE_SERVICE_ROOT_DIR=$HOME/autosync/as/core_service
 export AS_CORE_SERVICE_USER_SECRETS_DIR=$AS_CORE_SERVICE_ROOT_DIR/.secrets
 
-def _setup_mi_vars () {
+function _setup_mi_vars () {
   local VAR_NAME=${1#*/}
   VAR_NAME=${VAR_NAME:u}
   if [[ -n "$2" ]]; then
@@ -47,3 +47,61 @@ if [[ -d $AUTOSYNC_DIR ]]; then
   export CAWS_REPO=$AUTOSYNC_DIR/apps/credit-app
   export CONTAINER_UID=$(id -u)
 fi
+
+function _redev_aws () {
+  aws --profile $REDEV_PROFILE --region=$REDEV_REGION "$@"
+}
+
+function redev () {
+  REDEV_PROFILE="internal"
+  REDEV_REGION="ca-central-1"
+  REDEV_INSTANCE_ID="i-0ab78ef84f55fa9b7"
+  REDEV_SECURITY_GROUP_ID="sg-0a09dfd46f63d075b"
+  REDEV_SECURITY_GROUP_NAME="mi-is-infra_kaniabi"
+
+  CMD=$1
+  case $CMD in
+    "list")
+      _redev_aws ec2 describe-instances --instance-ids=$REDEV_INSTANCE_ID | jq -r '.Reservations[] | .Instances[] | "InstanceId: \(.InstanceId)\nPublicIpAddress: \(.PublicIpAddress)\nState: \(.State.Name)"'
+      ;;
+    "start")
+      echo "*** Starting remote development instance..."
+      _redev_aws ec2 start-instances --instance-ids=$REDEV_INSTANCE_ID
+      echo "*** Done."
+      ;;
+    "stop")
+      echo "*** Stopping remote development instance..."
+      _redev_aws ec2 stop-instances --instance-ids=$REDEV_INSTANCE_ID
+      echo "*** Done."
+      ;;
+    "shell")
+      echo "*** Shell into remote development instance..."
+      _redev_aws ssm start-session --target=$REDEV_INSTANCE_ID
+      echo "*** Done."
+      ;;
+    "ingress")
+      echo "*** List current ingress rules..."
+      _redev_aws ec2 describe-security-groups --group-ids=$REDEV_SECURITY_GROUP_ID | jq -r ".SecurityGroups[] | .IpPermissions[] | .IpRanges[] | .CidrIp"
+      echo "*** Done."
+      ;;
+    "set_ingress")
+      CURRENT_IP=$(curl ifconfig.co)
+      echo "*** Add ingress rules for current ip ($CURRENT_IP) ..."
+      _redev_aws ec2 authorize-security-group-ingress --group-id $REDEV_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr $CURRENT_IP/32
+      echo "*** Done."
+      ;;
+    *)
+      echo "
+redev: Remote Development tool
+
+* list
+* start
+* stop
+
+PROFILE=$REDEV_PROFILE
+REGION=$REDEV_REGION
+INSTANCE_ID=$REDEV_INSTANCE_ID
+"
+      ;;
+  esac
+}
