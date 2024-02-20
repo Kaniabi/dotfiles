@@ -21,8 +21,8 @@ function _setup_mi_vars () {
   [[ ! -d ${(P)VAR_REPO} ]] && echo "ERROR: Invalid directory ${VAR_REPO}=${(P)VAR_REPO}"
   [[ ! -d ${(P)VAR_DATA} ]] && echo "ERROR: Invalid directory ${VAR_DATA}=${(P)VAR_DATA}"
 
-  echo "$VAR_REPO=${(P)VAR_REPO}"
-  echo "$VAR_DATA=${(P)VAR_DATA}"
+  # echo "$VAR_REPO=${(P)VAR_REPO}"
+  # echo "$VAR_DATA=${(P)VAR_DATA}"
 }
 
 if [[ -d $AUTOSYNC_DIR ]]; then
@@ -104,4 +104,54 @@ INSTANCE_ID=$REDEV_INSTANCE_ID
 "
       ;;
   esac
+}
+
+function autosync_repos () {
+  IFS=$'\n' ALL_REPOS=($(gh repo list tdr-autosync --limit=1000 --no-archived --json name --jq ".[] | .name" | sort))
+  echo "AutoSync repositories:"
+  SKIP_COUNT=0
+  for i_repo in ${ALL_REPOS[@]}; do
+    LOCAL_DIR=""
+    case $i_repo in
+      "mi-infra-iac")
+        LOCAL_DIR="autosync/iac"
+        ;;
+      "mi-infra-baseimages")
+        LOCAL_DIR="autosync/baseimages"
+        ;;
+      "mi-infra*")
+        LOCAL_DIR="autosync/infra/${i_repo##*-}"
+        ;;
+      "mi-app-"*)
+        LOCAL_DIR="autosync/apps/${i_repo##*-}"
+        ;;
+      "qa")
+        LOCAL_DIR="autosync/apps/${i_repo##*-}"
+        ;;
+      "mi-lib-"*)
+        LOCAL_DIR="autosync/libs/${i_repo##*-}"
+        ;;
+      "as-app-"*)
+        LOCAL_DIR="autosync/as/${i_repo##*-}"
+        ;;
+      "as-lib-"*)
+        LOCAL_DIR="autosync/as/${i_repo##*-}"
+        ;;
+      "mi-tfmodule"*)
+        LOCAL_DIR="autosync/tfmodules/${i_repo##*-}"
+        ;;
+      *)
+        (( SKIP_COUNT+=1 ))
+        ;;
+      esac
+      if [[ -n $LOCAL_DIR ]]; then
+        if [[ -d "$HOME/$LOCAL_DIR" ]]; then
+          printf "%s: %s: ok\n" $i_repo $LOCAL_DIR
+          continue
+        fi
+        printf "%s: %s: cloning repo.\n" $i_repo $LOCAL_DIR
+        git clone --quiet "git@github.com:tdr-autosync/$i_repo" $LOCAL_DIR
+      fi
+  done
+  echo "$SKIP_COUNT skipped."
 }

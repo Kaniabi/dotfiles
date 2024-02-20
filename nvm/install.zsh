@@ -5,4 +5,4 @@ if [[ ! -d $NVM_DIR ]]; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh | bash
 fi
 
-source "$NVM_DIR/nvm.sh"
+source_it "$NVM_DIR/nvm.sh"
