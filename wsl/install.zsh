@@ -1,3 +1,5 @@
+#============================================================================== BROWSER
+# Configure BROWSER location (very specific to my current machin).
 export BROWSER="INVALID"
 declare -a BROWSERS=(
   "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"

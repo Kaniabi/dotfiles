@@ -30,12 +30,11 @@ if [[ -d $AUTOSYNC_DIR ]]; then
   _setup_mi_vars apps/tier3
   _setup_mi_vars apps/tier1
   _setup_mi_vars apps/unhaggle
-  _setup_mi_vars apps/polestar
-  _setup_mi_vars apps/bp
   _setup_mi_vars apps/pi
   _setup_mi_vars apps/peb
-  _setup_mi_vars apps/creditapp
   _setup_mi_vars apps/centralpanel
+
+  _setup_mi_vars as/creditapp
 
   _setup_mi_vars libs/api_clients
   _setup_mi_vars libs/core UH_CORE

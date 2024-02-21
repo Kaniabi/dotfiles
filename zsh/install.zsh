@@ -14,7 +14,7 @@ alias cd=z
 #============================================================================== fzf
 export PATH=$PATH:$HOME/.local/fzf/bin
 
-if (( ! $+commands[fzf] ))
+if [ ! -d $HOME/.local/fzf ]
 then
   echo "*** Installing fzf"
    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.local/fzf

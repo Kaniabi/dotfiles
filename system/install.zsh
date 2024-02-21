@@ -1,17 +1,26 @@
-if [[ $(uname) != "Darwin" ]]; then
-  apt_install_cmd parallel
-  apt_install_cmd ag silversearcher-ag
-fi
+apt_install_cmd nala
+alias apt="sudo nala"
 
-if (( ! $+commands[unzip] ))
-then
-  apt_install_cmd unzip
-fi
+apt_install_cmd batcat bat
+alias cat=batcat
 
-if (( ! $+commands[wget] ))
-then
-  apt_install_cmd wget
-fi
+apt_install_cmd jq
+
+apt_install_cmd parallel
+
+apt_install_cmd ag silversearcher-ag
+alias ag="\ag --hidden"
+
+apt_install_cmd unzip
+
+apt_install_cmd wget
+
+apt_install_cmd exa
+alias dir="exa -la"
+
+apt_install_cmd nvim neovim
+alias vim="nvim"
+export EDITOR='nvim'
 
 # TODO: This is failing on Debian12 (remote-machine).
 #if (( ! $+commands[locale-gen] ))
