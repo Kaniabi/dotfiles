@@ -60,9 +60,6 @@ function redev () {
 
   CMD=$1
   case $CMD in
-    "list")
-      _redev_aws ec2 describe-instances --instance-ids=$REDEV_INSTANCE_ID | jq -r '.Reservations[] | .Instances[] | "InstanceId: \(.InstanceId)\nPublicIpAddress: \(.PublicIpAddress)\nState: \(.State.Name)"'
-      ;;
     "start")
       echo "*** Starting remote development instance..."
       _redev_aws ec2 start-instances --instance-ids=$REDEV_INSTANCE_ID
@@ -83,7 +80,7 @@ function redev () {
       _redev_aws ec2 describe-security-groups --group-ids=$REDEV_SECURITY_GROUP_ID | jq -r ".SecurityGroups[] | .IpPermissions[] | .IpRanges[] | .CidrIp"
       echo "*** Done."
       ;;
-    "set_ingress")
+    "ingress.set")
       CURRENT_IP=$(curl ifconfig.co)
       echo "*** Add ingress rules for current ip ($CURRENT_IP) ..."
       _redev_aws ec2 authorize-security-group-ingress --group-id $REDEV_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr $CURRENT_IP/32
@@ -93,14 +90,17 @@ function redev () {
       echo "
 redev: Remote Development tool
 
-* list
-* start
-* stop
+Commands:
+  * start: Starts the instance.
+  * stop: Stops the instance.
+  * shell: Start a SSM session.
+  * ingress: List ingress rules.
+  * ingress.set: Add a new ingress rule for the current IP.
 
 PROFILE=$REDEV_PROFILE
 REGION=$REDEV_REGION
-INSTANCE_ID=$REDEV_INSTANCE_ID
-"
+INSTANCE_ID=$REDEV_INSTANCE_ID"
+      _redev_aws ec2 describe-instances --instance-ids=$REDEV_INSTANCE_ID | jq -r '.Reservations[] | .Instances[] | "INSTANCE_IP: \(.PublicIpAddress)\nINSTANCE_STATE: \(.State.Name)"'
       ;;
   esac
 }

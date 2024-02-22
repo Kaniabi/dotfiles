@@ -1,3 +1,8 @@
+
+# NeoVim
+# apt_install python3-launchpadlib software-properties-common
+# sudo add-apt-repository ppa:neovim-ppa/stable -y
+
 apt_install_cmd nala
 alias apt="sudo nala"
 
@@ -18,9 +23,14 @@ apt_install_cmd wget
 apt_install_cmd exa
 alias dir="exa -la"
 
-apt_install_cmd nvim neovim
-alias vim="nvim"
-export EDITOR='nvim'
+# The system version have a pretty old neovim.
+#apt_install_cmd nvim neovim
+#alias vim="nvim"
+#export EDITOR='nvim'
+
+export ZPLUG_HOME=$HOME/.local/zplug
+git_install https://github.com/zplug/zplug $ZPLUG_HOME
+source_it $ZPLUG_HOME/init.zsh
 
 # TODO: This is failing on Debian12 (remote-machine).
 #if (( ! $+commands[locale-gen] ))

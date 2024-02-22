@@ -9,3 +9,6 @@ if [[ -d $HOME/projects/private/aws ]]; then
   rm $HOME/.aws
   ln -s $HOME/projects/private/aws $HOME/.aws
 fi
+
+# Use docker without sudo.
+# sudo setfacl -m user:kaniabi:rw /var/run/docker.sock
