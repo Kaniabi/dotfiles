@@ -1,8 +1,17 @@
 #!/bin/zsh
 
-set -eo pipefail
+set -e
+# setopt xtrace
 
-source $HOME/.dotfiles/dotfiles
+if [[ -n "$IS_DOTFILES" ]]; then
+  source $HOME/.dotfiles/dotfiles
+fi
+
+# Configure symlink in the home directory
+DOTFILES_SYMLINK .zshrc
+DOTFILES_SYMLINK .zshrc.local
+DOTFILES_SYMLINK .gitconfig.local
+DOTFILES_SYMLINK .gitconfig
 
 # START nala 'replacements for apt'
 # if [[ $MACHINE != "Mac" ]]; then
@@ -10,6 +19,7 @@ source $HOME/.dotfiles/dotfiles
 #   ALIAS apt "sudo nala"
 # fi
 
+START git 'Source code versioning'
 INSTALL_CMD git
 
 START bat 'Replacement for cat'
@@ -49,12 +59,19 @@ INSTALL_CMD unzip
 START wget 'Download files'
 INSTALL_CMD wget
 
-START starship 'Command line customization (wip)'
-INSTALL_CMD starship
+if ( $IS_MAC ); then
+  START starship 'Command line customization (wip)'
+  INSTALL_CMD starship
+fi
 
-START eza 'Colorfull directory list (wip)'
-INSTALL_CMD eza
-ALIAS dir "eza -la"
+START exa 'Colorfull directory list (wip)'
+if ( $IS_MAC ); then
+  INSTALL_CMD eza
+  ALIAS dir "eza -la"
+else
+  INSTALL_CMD exa
+  ALIAS dir "exa -la"
+fi
 
 # NOTE: Debian12 have a pretty old neovim.
 START neovim 'Text editor'

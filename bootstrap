@@ -3,4 +3,4 @@
 set -eou pipefail
 
 apt update
-apt install -y zsh sudo ca-certificates
+apt install -y zsh sudo ca-certificates python3 python3-pip

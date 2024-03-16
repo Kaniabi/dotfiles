@@ -1,6 +1,9 @@
 export DOTFILES_INFO=true
 export DOTFILES_DEBUG=false
 
+export IS_DOTFILES=true
+export IS_MAC=false
+export IS_LINUX=false
 case "$(uname -s)" in
     Linux*)
       export IS_LINUX=true
@@ -72,7 +75,7 @@ function die () {
 DOTFILES_INSTALL_DIR=""
 function START () {
   FINISH
-  INFO "#============================================================================== $@"
+  INFO "*** $@"
   DOTFILES_INSTALL_DIR="/tmp/$1"
   mkdir -p "$DOTFILES_INSTALL_DIR"
   cd "$DOTFILES_INSTALL_DIR"
@@ -135,7 +138,9 @@ function EXPORT () {
 
 function DOTFILES_SYMLINK () {
   local TARGET=$HOME/$1
-  local SOURCE=$HOME/projects/dotfiles/${2:-$1}
+  local SOURCE=$HOME/projects/dotfiles/home/${2:-$1}
   DEBUG "DOTFILES_SYMLINK $1"
-  [[ ! -f $TARGET ]] && ln -s $SOURCE $TARGET
+  if [[ ! -f $TARGET ]]; then
+    ln -s $SOURCE $TARGET
+  fi
 }
