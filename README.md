@@ -4,6 +4,8 @@
 
 * `install`: run this everytime you enter the system to check for the existing commands and install the missing ones.
 
+* `dotfiles`: all base functions for dotfiles.
+
 * `test`: Test the dotfiles setup and installation in a docker container.
 
 
