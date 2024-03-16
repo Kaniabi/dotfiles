@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eou pipefail
+
+apt update
+apt install -y zsh sudo ca-certificates

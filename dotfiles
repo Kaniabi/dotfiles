@@ -1,0 +1,141 @@
+export DOTFILES_INFO=true
+export DOTFILES_DEBUG=false
+
+case "$(uname -s)" in
+    Linux*)
+      export IS_LINUX=true
+      ;;
+    Darwin*)
+      export IS_MAC=true
+      ;;
+esac
+
+function INFO () {
+  if ( $DOTFILES_INFO ); then
+    echo "$@"
+  fi
+}
+
+function DEBUG () {
+  if ( $DOTFILES_DEBUG ); then
+    echo "*** DEBUG: $@"
+  fi
+}
+
+function TODO () {
+  echo "*** TODO ***: $@"
+}
+
+function go_install_cmd () {
+  local CMD=$1
+  local PACKAGE=${2:-$1}
+  if (( ! $+commands[$CMD] ))
+  then
+    INFO "go_install_cmd $@"
+    go install $PACKAGE
+  fi
+}
+
+function url_install_cmd () {
+  local CMD=$1
+  local URL=$2
+  if (( ! $+commands[$CMD] ))
+  then
+    INFO "url_install_cmd $@"
+    curl -s -o- $URL | bash
+  fi
+}
+
+function INSTALL_GIT () {
+  local REPO_URL=$1
+  local LOCAL_DIR=$2
+  if [ ! -d $LOCAL_DIR ]
+  then
+    INFO "INSTALL_GIT $@"
+    git clone --quiet "$REPO_URL" "$LOCAL_DIR"
+  fi
+}
+
+function SOURCE () {
+  if [[ ! -f $1 ]]; then
+    return
+  fi
+  DEBUG "SOURCE $1"
+  source $1
+}
+
+function die () {
+  echo $1
+  exit 99
+}
+
+DOTFILES_INSTALL_DIR=""
+function START () {
+  FINISH
+  INFO "#============================================================================== $@"
+  DOTFILES_INSTALL_DIR="/tmp/$1"
+  mkdir -p "$DOTFILES_INSTALL_DIR"
+  cd "$DOTFILES_INSTALL_DIR"
+}
+
+function FINISH () {
+  if [[ -n $DOTFILES_INSTALL_DIR ]]; then
+    rm -rf $DOTFILES_INSTALL_DIR
+    cd $HOME
+    DOTFILES_INSTALL_DIR=""
+  fi
+}
+
+function DOWNLOAD () {
+  DEBUG "DOWNLOAD $@"
+  if [[ "$1" = "s3://"* ]]; then
+    AWS_ACCESS_KEY_ID=${AWS_CREDENTIALS%,*} AWS_SECRET_ACCESS_KEY=${AWS_CREDENTIALS#*,} aws s3 cp $1 ${1##*/}
+  else
+    wget --no-verbose "$@"
+  fi
+}
+
+function INSTALL () {
+  INFO "INSTALL $@"
+  local PACKAGE=$1
+  if [[ $PACKAGE == ("http:"*|"https:"*|"s3://"*) ]]; then
+    DOWNLOAD $PACKAGE
+    PACKAGE=$(basename $PACKAGE)
+  fi
+  if [[ $PACKAGE == *".sh" ]]; then
+    bash $PACKAGE
+  elif [[ $MACHINE == "Mac" ]]; then
+    brew install -q $PACKAGE
+  elif [[ $PACKAGE == *".deb" ]]; then
+    shift
+    sudo dpkg -i $PACKAGE $@
+  else
+    sudo apt-get install --no-install-recommends -y $@
+  fi
+}
+
+function INSTALL_CMD () {
+  local CMD=$1
+  local PACKAGE=${2:-$1}
+  if (( ! $+commands[$CMD] ))
+  then
+    INSTALL $PACKAGE
+  fi
+}
+
+function ALIAS () {
+  DEBUG "ALIAS $1"
+  alias $1=$2
+}
+
+function EXPORT () {
+  DEBUG "EXPORT $1"
+  export $1=$2
+}
+
+function DOTFILES_SYMLINK () {
+  local TARGET=$HOME/$1
+  local SOURCE=$HOME/projects/dotfiles/${2:-$1}
+  DEBUG "DOTFILES_SYMLINK $1"
+  [[ ! -f $TARGET ]] && ln -s $SOURCE $TARGET
+}

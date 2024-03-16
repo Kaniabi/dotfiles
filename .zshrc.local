@@ -1,0 +1,197 @@
+
+function genpasswd () {
+  PASSWORD_LEVEL=4
+  RESULT=""
+  for ((i=1;i<=PASSWORD_LEVEL;i++)); do
+    PASSWORD_PART="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 4 | tr -d '\n')"
+    if [[ $PASSWORD_PART =~ ^[[:upper:]] ]]; then
+      PASSWORD_PART="${(U)PASSWORD_PART}"
+    else
+      PASSWORD_PART="${(L)PASSWORD_PART}"
+    fi
+
+    if [[ -n "$RESULT" ]]; then
+      RESULT="$RESULT-$PASSWORD_PART"
+    else
+      RESULT=$PASSWORD_PART
+    fi
+  done
+  echo $RESULT
+}
+
+# Aws
+
+function awsin () {
+  aws sso login --profile=$1
+}
+
+function awsout () {
+  aws sso logout --profile=$1
+}
+
+# Git
+
+function gwip() {
+  git commit -am "WIP: $*"  && \
+  gpush
+}
+
+function gshow() {
+  git show --name-status "$@"
+}
+
+function grev () {
+  git commit -am "REV: $*"  && \
+  gpush
+}
+
+function gsquash () {
+  [[ -z "$1" ]] && echo "Usage: gsquash <BRANCH>" && return 9
+  local HEAD=$(git rev-parse HEAD)
+  git reset --hard $1
+  git merge --squash $HEAD
+}
+
+function workon () {
+  if [[ $1 == "" ]]; then
+    pyenv versions
+  else
+    pyenv shell $1
+  fi
+}
+
+function grom () {
+  git checkout $1 && \
+  git rebase ${2:-master} && \
+  gpush
+}
+
+function gb () {
+  git for-each-ref  \
+    --sort=committerdate refs/heads/ \
+    --format='%(color:yellow)%(align:width=32)%(refname:lstrip=2)%(end)%(color:reset): %(contents:subject) %(color:green)(%(committerdate:relative))%(color:blue) %(authorname)%(color:reset)'
+}
+
+function gbst () {
+  for i_branch in $( gb ); do printf "$i_branch "; hub ci-status $i_branch; done;
+}
+
+function gretag () {
+  [[ -z $1 ]] && die "Usage: gretag <TAG>"
+  hub tag -d $1
+  hub tag $1
+  hub push origin --force $1
+}
+
+function gpush () {
+  hub push --set-upstream origin "$@" $(git_current_branch)
+}
+
+function gpull () {
+  hub pull
+}
+
+# alias gamend='git add -A .;git amend;gpush -f'
+# alias gamendn='git add -A .;git commit -an --amend;gpush -f'
+function gamend () {
+  hub add -A .
+  hub commit --amend --no-edit --all
+}
+
+function ggrepos () {
+  find . -name .git | xargs dirname | grep -v "/\." | sort
+}
+
+function ggfetch () {
+  REPOS=$(ggrepos)
+  parallel gfetch ::: $REPOS
+}
+
+function ggpull () {
+  REPOS=$(ggrepos)
+  for i_repo in ${(f)REPOS}; do
+    echo "********************************************************************* $i_repo"
+    hub -C $i_repo pull
+  done
+}
+
+function ggst () {
+  REPOS=$(ggrepos)
+  for i_repo in ${(f)REPOS}; do
+    echo -n "`realpath --relative-to=$PWD $i_repo`  "
+    hub -C $i_repo st  # | tail -n +2
+  done
+}
+
+function gg () {
+  REPOS=$(ggrepos)
+  for i_repo in ${(f)REPOS}; do
+    echo "********************************************************************* $i_repo"
+    hub -C $i_repo "$@"
+  done
+}
+
+function gdiff() {
+  git diff --name-status "${@:-master}"
+}
+
+# Remote Development
+
+function _redev_aws () {
+  aws --profile $REDEV_PROFILE --region=$REDEV_REGION "$@"
+}
+
+function redev () {
+  REDEV_PROFILE="internal"
+  REDEV_REGION="ca-central-1"
+  REDEV_INSTANCE_ID="i-0ab78ef84f55fa9b7"
+  REDEV_SECURITY_GROUP_ID="sg-0a09dfd46f63d075b"
+  REDEV_SECURITY_GROUP_NAME="mi-is-infra_kaniabi"
+
+  CMD=$1
+  case $CMD in
+    "start")
+      INFO "Starting remote development instance..."
+      _redev_aws ec2 start-instances --instance-ids=$REDEV_INSTANCE_ID
+      INFO "Done."
+      ;;
+    "stop")
+      INFO "*** Stopping remote development instance..."
+      _redev_aws ec2 stop-instances --instance-ids=$REDEV_INSTANCE_ID
+      INFO "*** Done."
+      ;;
+    "shell")
+      INFO "*** Shell into remote development instance..."
+      _redev_aws ssm start-session --target=$REDEV_INSTANCE_ID
+      INFO "*** Done."
+      ;;
+    "ingress")
+      INFO "*** List current ingress rules..."
+      _redev_aws ec2 describe-security-groups --group-ids=$REDEV_SECURITY_GROUP_ID | jq -r ".SecurityGroups[] | .IpPermissions[] | .IpRanges[] | .CidrIp"
+      INFO "*** Done."
+      ;;
+    "ingress.set")
+      CURRENT_IP=$(curl ifconfig.co)
+      INFO "*** Add ingress rules for current ip ($CURRENT_IP) ..."
+      _redev_aws ec2 authorize-security-group-ingress --group-id $REDEV_SECURITY_GROUP_ID --protocol tcp --port 22 --cidr $CURRENT_IP/32
+      INFO "*** Done."
+      ;;
+    *)
+      echo "
+redev: Remote Development tool
+
+Commands:
+  * start: Starts the instance.
+  * stop: Stops the instance.
+  * shell: Start a SSM session.
+  * ingress: List ingress rules.
+  * ingress.set: Add a new ingress rule for the current IP.
+
+PROFILE=$REDEV_PROFILE
+REGION=$REDEV_REGION
+INSTANCE_ID=$REDEV_INSTANCE_ID"
+      _redev_aws ec2 describe-instances --instance-ids=$REDEV_INSTANCE_ID | jq -r '.Reservations[] | .Instances[] | "INSTANCE_IP: \(.PublicIpAddress)\nINSTANCE_STATE: \(.State.Name)"'
+      ;;
+  esac
+}
+

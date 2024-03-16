@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eou pipefail
+
+docker build -t dotfiles .
+docker run dotfiles /root/.dotfiles/install

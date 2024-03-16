@@ -98,6 +98,7 @@ function ggpull () {
     hub -C $i_repo pull
   done
 }
+
 function ggst () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do

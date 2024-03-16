@@ -1,0 +1,122 @@
+#!/bin/zsh
+
+set -eo pipefail
+
+source $HOME/.dotfiles/dotfiles
+
+# START nala 'replacements for apt'
+# if [[ $MACHINE != "Mac" ]]; then
+#   INSTALL_CMD nala
+#   ALIAS apt "sudo nala"
+# fi
+
+INSTALL_CMD git
+
+START bat 'Replacement for cat'
+if [[ $MACHINE == "Mac" ]]; then
+  INSTALL_CMD bat
+else
+  INSTALL_CMD batcat bat
+fi
+
+START pyenv
+INSTALL_GIT https://github.com/pyenv/pyenv.git $HOME/.pyenv
+INSTALL_GIT https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
+
+START hub 'Improved git CLI'
+INSTALL_CMD hub
+eval "$(hub alias -s zsh)"
+
+START gh 'GitHub CLI'
+INSTALL_CMD gh
+
+START jq 'JSON query tool'
+INSTALL_CMD jq
+
+START go 'GO programming language'
+INSTALL_CMD go golang
+
+START parallel
+INSTALL_CMD parallel
+
+START ag: 'Find in files'
+INSTALL_CMD ag silversearcher-ag
+ALIAS ag "\ag --hidden"
+
+START unzip 'Extract zip files'
+INSTALL_CMD unzip
+
+START wget 'Download files'
+INSTALL_CMD wget
+
+START starship 'Command line customization (wip)'
+INSTALL_CMD starship
+
+START eza 'Colorfull directory list (wip)'
+INSTALL_CMD eza
+ALIAS dir "eza -la"
+
+# NOTE: Debian12 have a pretty old neovim.
+START neovim 'Text editor'
+INSTALL_CMD nvim neovim
+ALIAS vim "nvim"
+EXPORT EDITOR "nvim"
+
+# TODO: How to install newer version on Debian12?
+# apt_install python3-launchpadlib software-properties-common
+# sudo add-apt-repository ppa:neovim-ppa/stable -y
+
+START zoxide 'Improved cd (change directory)'
+INSTALL_CMD zoxide https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh
+INSTALL_GIT https://github.com/junegunn/fzf.git $HOME/.local/fzf
+eval "$(zoxide init zsh)"
+ALIAS cd z
+
+# # Plugin manager for zsh (disabled until decide what to do with spaceship and oh-my-zsh)
+# export ZPLUG_HOME=$HOME/.local/zplug
+# git_install https://github.com/zplug/zplug $ZPLUG_HOME
+# SOURCE $ZPLUG_HOME/init.zsh
+
+# TODO: This is failing on Debian12 (remote-machine).
+#if (( ! $+commands[locale-gen] ))
+#then
+#  sudo apt install locales
+#  sudo locale-gen en_US.UTF-8
+##  echo "LANGUAGE=en_US.UTF-8
+##LC_ALL=en_US.UTF-8
+##LANGUAGE=en_US.UTF-8" | sudo tee /etc/default/locale
+#  echo "locales locales/default_environment_locale select en_US.UTF-8" | sudo debconf-set-selections
+#  echo "locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8" | sudo debconf-set-selections
+#  sudo dpkg-reconfigure --frontend noninteractive locales
+#fi
+
+START oh-my-zsh 'Zsh extensions'
+INSTALL_GIT https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+EXPORT ZSH_THEME "kaniabi-mortalscumbag"
+EXPORT ZSH_CUSTOM $DOTFILES/oh-my-zsh
+EXPORT ZSH_DISABLE_COMPFIX true
+EXPORT ZSH $HOME/.oh-my-zsh
+SOURCE "$ZSH/oh-my-zsh.sh"
+
+# git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+# git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+# [[ ! -d $ZSH_CUSTOM/plugins/zsh-autocomplete ]] && git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
+
+
+START private.env 'Private environment variables from 1Password'
+TODO private.env
+# TODO: Re-enable this
+# SOURCE "$HOME/projects/private/private.env"
+
+START aws 'AWS CLI and friends'
+if ( $IS_MAC ); then
+  INSTALL_CMD aws awscli
+else
+  INSTALL_CMD aws "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+  INSTALL_CMD session-manager-plugin "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" 
+  INSTALL_CMD sam "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip"
+  INSTALL_CMD ecs-cli "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest"
+fi
+
+FINISH
