@@ -3,7 +3,7 @@
 set -e
 # setopt xtrace
 
-if [[ -n "$IS_DOTFILES" ]]; then
+if [[ -z "$IS_DOTFILES" ]]; then
   source $HOME/.dotfiles/dotfiles
 fi
 
@@ -23,7 +23,7 @@ START git 'Source code versioning'
 INSTALL_CMD git
 
 START bat 'Replacement for cat'
-if [[ $MACHINE == "Mac" ]]; then
+if ( $IS_MAC ); then
   INSTALL_CMD bat
 else
   INSTALL_CMD batcat bat
