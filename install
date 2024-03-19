@@ -3,15 +3,14 @@
 set -e
 # setopt xtrace
 
-if [[ -z "$IS_DOTFILES" ]]; then
-  source $HOME/.dotfiles/dotfiles
-fi
+source $HOME/.dotfiles/dotfiles
 
 # Configure symlink in the home directory
 DOTFILES_SYMLINK .zshrc
 DOTFILES_SYMLINK .zshrc.local
 DOTFILES_SYMLINK .gitconfig.local
 DOTFILES_SYMLINK .gitconfig
+DOTFILES_SYMLINK .config/starship.toml
 
 # START nala 'replacements for apt'
 # if [[ $MACHINE != "Mac" ]]; then
@@ -62,6 +61,7 @@ INSTALL_CMD wget
 if ( $IS_MAC ); then
   START starship 'Command line customization (wip)'
   INSTALL_CMD starship
+  eval "$(starship init zsh)"
 fi
 
 START exa 'Colorfull directory list (wip)'
@@ -107,13 +107,14 @@ ALIAS cd z
 #  sudo dpkg-reconfigure --frontend noninteractive locales
 #fi
 
-START oh-my-zsh 'Zsh extensions'
-EXPORT ZSH_THEME "kaniabi-mortalscumbag"
-EXPORT ZSH_CUSTOM $HOME/.dotfiles/oh-my-zsh
-EXPORT ZSH_DISABLE_COMPFIX true
-EXPORT ZSH $HOME/.oh-my-zsh
-INSTALL_GIT https://github.com/robbyrussell/oh-my-zsh.git $ZSH
-SOURCE "$ZSH/oh-my-zsh.sh"
+# WIP: Replacing oh-my-zsh with starship.
+# START oh-my-zsh 'Zsh extensions'
+# EXPORT ZSH_THEME "kaniabi-mortalscumbag"
+# EXPORT ZSH_CUSTOM $HOME/.dotfiles/oh-my-zsh
+# EXPORT ZSH_DISABLE_COMPFIX true
+# EXPORT ZSH $HOME/.oh-my-zsh
+# INSTALL_GIT https://github.com/robbyrussell/oh-my-zsh.git $ZSH
+# SOURCE "$ZSH/oh-my-zsh.sh"
 
 # git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
