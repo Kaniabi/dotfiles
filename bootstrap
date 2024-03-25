@@ -4,3 +4,5 @@ set -eou pipefail
 
 apt update
 apt install -y zsh sudo ca-certificates python3 python3-pip
+
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

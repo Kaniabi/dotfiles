@@ -77,6 +77,7 @@ function START () {
   FINISH
   INFO "*** $@"
   DOTFILES_INSTALL_DIR="/tmp/$1"
+  rm -rf "$DOTFILES_INSTALL_DIR"
   mkdir -p "$DOTFILES_INSTALL_DIR"
   cd "$DOTFILES_INSTALL_DIR"
 }
@@ -138,7 +139,7 @@ function EXPORT () {
 
 function DOTFILES_SYMLINK () {
   local TARGET=$HOME/$1
-  local SOURCE=$HOME/projects/dotfiles/home/${2:-$1}
+  local SOURCE=$HOME/.dotfiles/home/${2:-$1}
   DEBUG "DOTFILES_SYMLINK $1"
   if [[ ! -f $TARGET ]]; then
     ln -s $SOURCE $TARGET

@@ -18,6 +18,9 @@ DOTFILES_SYMLINK .config/starship.toml
 #   ALIAS apt "sudo nala"
 # fi
 
+START curl 'Download urls'
+INSTALL_CMD curl
+
 START git 'Source code versioning'
 INSTALL_CMD git
 
@@ -58,11 +61,11 @@ INSTALL_CMD unzip
 START wget 'Download files'
 INSTALL_CMD wget
 
+START starship 'Command line customization (wip)'
 if ( $IS_MAC ); then
-  START starship 'Command line customization (wip)'
   INSTALL_CMD starship
-  eval "$(starship init zsh)"
 fi
+eval "$(starship init zsh)"
 
 START exa 'Colorfull directory list (wip)'
 if ( $IS_MAC ); then
