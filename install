@@ -65,12 +65,6 @@ INSTALL_CMD unzip
 START wget 'Download files'
 INSTALL_CMD wget
 
-START starship 'Command line customization (wip)'
-if ( $IS_MAC ); then
-  INSTALL_CMD starship
-fi
-eval "$(starship init zsh)"
-
 START exa 'Colorfull directory list (wip)'
 if ( $IS_MAC ); then
   INSTALL_CMD eza
@@ -123,6 +117,13 @@ ALIAS cd z
 # INSTALL_GIT https://github.com/robbyrussell/oh-my-zsh.git $ZSH
 # SOURCE "$ZSH/oh-my-zsh.sh"
 
+START starship 'Command line customization (wip)'
+# if ( $IS_MAC ); then
+#   INSTALL_CMD starship
+# fi
+eval "$(starship init zsh)"
+SOURCE $HOME/.oh-my-zsh/lib/key-bindings.zsh
+
 # git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 # git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
@@ -145,13 +146,15 @@ fi
 
 if ( $IS_WSL ); then
   START wslu
+
+  # INSTALL wslu
+  # sudo apt install gnupg2 apt-transport-https
+  # wget -O - https://pkg.wslutiliti.es/public.key | sudo gpg -o /usr/share/keyrings/wslu-archive-keyring.pgp --dearmor
+  # echo "deb [signed-by=/usr/share/keyrings/wslu-archive-keyring.pgp] https://pkg.wslutiliti.es/debian bookworm main" | sudo tee -a /etc/apt/sources.list.d/wslu.list
+  # sudo apt update
+  # sudo apt install wslu
 fi
 
-# sudo apt install gnupg2 apt-transport-https
-# wget -O - https://pkg.wslutiliti.es/public.key | sudo gpg -o /usr/share/keyrings/wslu-archive-keyring.pgp --dearmor
-# echo "deb [signed-by=/usr/share/keyrings/wslu-archive-keyring.pgp] https://pkg.wslutiliti.es/debian bookworm main" | sudo tee -a /etc/apt/sources.list.d/wslu.list
-# sudo apt update
-# sudo apt install wslu
 
 START pyenv
 EXPORT PATH "$PATH:$HOME/.pyenv/bin"

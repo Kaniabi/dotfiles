@@ -9,9 +9,26 @@ SOURCE "$HOME/.zshrc.local"
 
 set +e
 
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# TODO: Move to .config/zsh later
+# export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export ZDOTDIR="$HOME"
+
+export HISTFILE="$ZDOTDIR/.zsh_history" # History filepath
+export HISTSIZE=10000                   # Maximum events for internal history
+export SAVEHIST=10000                   # Maximum events in history file
+
+# dirs
+setopt AUTO_PUSHD           # Push the current directory visited on the stack.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+alias d='dirs -v'
+
+# 
+SOURCE $HOME/.dotfiles/key-bindings.zsh
