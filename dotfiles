@@ -1,5 +1,5 @@
 export DOTFILES_INFO=true
-export DOTFILES_DEBUG=false
+export DOTFILES_DEBUG=true
 
 export IS_DOTFILES=true
 export IS_MAC=false
@@ -27,6 +27,10 @@ function DEBUG () {
 
 function TODO () {
   echo "*** TODO ***: $@"
+}
+
+function TEST_CMD () {
+  echo "$(eval $@)"
 }
 
 function go_install_cmd () {
@@ -92,7 +96,7 @@ function FINISH () {
 
 function DOWNLOAD () {
   DEBUG "DOWNLOAD $@"
-  if [[ "$1" = "s3://"* ]]; then
+  if [[ "$1" == "s3://"* ]]; then
     AWS_ACCESS_KEY_ID=${AWS_CREDENTIALS%,*} AWS_SECRET_ACCESS_KEY=${AWS_CREDENTIALS#*,} aws s3 cp $1 ${1##*/}
   else
     wget --no-verbose "$@"

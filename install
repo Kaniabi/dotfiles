@@ -153,4 +153,30 @@ fi
 # sudo apt update
 # sudo apt install wslu
 
+START pyenv
+EXPORT PATH "$PATH:$HOME/.pyenv/bin"
+if (( ! $+commands[pyenv] )); then
+  INSTALL_GIT https://github.com/pyenv/pyenv.git $HOME/.pyenv
+  INSTALL_GIT https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
+fi
+TEST_CMD pyenv --version
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+TODO Install 'deen' virtualenv if needed.
+pyenv shell deen || true
+
+START tfenv
+EXPORT PATH "$PATH:$HOME/.tfenv/bin"
+if (( ! $+commands[tfenv] )); then
+  INSTALL_GIT https://github.com/tfutils/tfenv.git $HOME/.tfenv
+fi
+TEST_CMD tfenv --version
+
+START pkenv
+EXPORT PATH "$PATH:$HOME/.pkenv/bin"
+if (( ! $+commands[pkenv] )); then
+  INSTALL_GIT https://github.com/iamhsa/pkenv.git $HOME/.pkenv
+fi
+TEST_CMD pkenv --version
+
 FINISH
