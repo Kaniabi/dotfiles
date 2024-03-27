@@ -108,7 +108,7 @@ function INSTALL () {
   fi
   if [[ $PACKAGE == *".sh" ]]; then
     bash $PACKAGE
-  elif [[ $MACHINE == "Mac" ]]; then
+  elif [[ $IS_MAC == true ]]; then
     brew install -q $PACKAGE
   elif [[ $PACKAGE == *".deb" ]]; then
     shift
@@ -138,10 +138,12 @@ function EXPORT () {
 }
 
 function DOTFILES_SYMLINK () {
+  set -x
   local TARGET=$HOME/$1
   local SOURCE=$HOME/.dotfiles/home/${2:-$1}
   DEBUG "DOTFILES_SYMLINK $1"
-  if [[ ! -f $TARGET ]]; then
+  if [[ ! -e $TARGET ]]; then
+    rm -f $TARGET
     ln -s $SOURCE $TARGET
   fi
 }

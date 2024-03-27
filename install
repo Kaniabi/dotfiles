@@ -52,7 +52,11 @@ START parallel
 INSTALL_CMD parallel
 
 START ag: 'Find in files'
-INSTALL_CMD ag silversearcher-ag
+if ( $IS_MAC ); then
+  INSTALL_CMD ag the_silver_searcher  
+else
+  INSTALL_CMD ag silversearcher-ag
+fi
 ALIAS ag "\ag --hidden"
 
 START unzip 'Extract zip files'
