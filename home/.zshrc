@@ -7,9 +7,9 @@ EXPORT PATH "$HOME/.dotfiles/bin:$PATH"
 SOURCE "$HOME/.dotfiles/install"
 SOURCE "$HOME/.zshrc.local"
 
-SOURCE "$HOME/.dotfiles/plugins/*.plugin.zsh"
-
-set +e
+for i_plugin ("$HOME"/.dotfiles/plugins/*.zsh); do
+  SOURCE "${i_plugin}"
+done
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"

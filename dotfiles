@@ -87,6 +87,7 @@ function START () {
 }
 
 function FINISH () {
+  DEBUG "FINISH $DOTFILES_INSTALL_DIR"
   if [[ -n $DOTFILES_INSTALL_DIR ]]; then
     rm -rf $DOTFILES_INSTALL_DIR
     cd $HOME
@@ -142,7 +143,6 @@ function EXPORT () {
 }
 
 function DOTFILES_SYMLINK () {
-  set -x
   local TARGET=$HOME/$1
   local SOURCE=$HOME/.dotfiles/home/${2:-$1}
   DEBUG "DOTFILES_SYMLINK $1"

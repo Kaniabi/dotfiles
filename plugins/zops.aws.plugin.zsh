@@ -1,3 +1,5 @@
+START zops.aws
+
 local ZOPS_AWS_PREFIX="zops aws"
 for i_cmd in ami.list ami.build ec2.list ec2.shell ec2.start asg.list asg.update params.list params.put params.get params.set; do
   alias $i_cmd="$ZOPS_AWS_PREFIX $i_cmd"
