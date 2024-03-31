@@ -1,4 +1,5 @@
-START bat 'Replacement for cat'
+# Replacement for cat
+
 if ( $IS_MAC ); then
   INSTALL_CMD bat
   ALIAS cat bat

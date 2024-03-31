@@ -4,13 +4,6 @@ source $HOME/.dotfiles/dotfiles
 EXPORT PATH "$HOME/.local/bin:$PATH"
 EXPORT PATH "$HOME/.dotfiles/bin:$PATH"
 
-SOURCE "$HOME/.dotfiles/install"
-SOURCE "$HOME/.zshrc.local"
-
-for i_plugin ("$HOME"/.dotfiles/plugins/*.zsh); do
-  SOURCE "${i_plugin}"
-done
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
 export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
@@ -30,3 +23,8 @@ alias d='dirs -v'
 
 # Key bindings (from oh-my-zsh)
 SOURCE $HOME/.dotfiles/key-bindings.zsh
+
+# ---
+
+SOURCE "$HOME/.zshrc.local"
+SOURCE "$HOME/.dotfiles/install"

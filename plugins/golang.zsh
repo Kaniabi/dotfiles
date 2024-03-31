@@ -1,4 +1,5 @@
-START go 'GO programming language'
+# GO programming language
+
 INSTALL_CMD go golang
 
 EXPORT GOPATH "$HOME/go"

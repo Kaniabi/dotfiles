@@ -1,9 +1,9 @@
 export DOTFILES_INFO=true
-export DOTFILES_DEBUG=true
+export DOTFILES_DEBUG=false
 
-export IS_DOTFILES=true
 export IS_MAC=false
 export IS_LINUX=false
+export IS_WSL=false
 case "$(uname -s)" in
     Linux*)
       export IS_LINUX=true
@@ -12,6 +12,30 @@ case "$(uname -s)" in
       export IS_MAC=true
       ;;
 esac
+
+if [[ $(uname -a) == *"WSL2"* ]]; then
+  export IS_WSL=true
+fi
+
+DOTFILES_INSTALL_DIR=""
+
+function START () {
+  FINISH
+  INFO "*** $1 - ${2:-.}"
+  DOTFILES_INSTALL_DIR="/tmp/$1"
+  rm -rf "$DOTFILES_INSTALL_DIR"
+  mkdir -p "$DOTFILES_INSTALL_DIR"
+  pushd "$DOTFILES_INSTALL_DIR"
+}
+
+function FINISH () {
+  DEBUG "FINISH $DOTFILES_INSTALL_DIR"
+  if [[ -n $DOTFILES_INSTALL_DIR ]]; then
+    rm -rf $DOTFILES_INSTALL_DIR
+    popd
+    DOTFILES_INSTALL_DIR=""
+  fi
+}
 
 function INFO () {
   if ( $DOTFILES_INFO ); then
@@ -26,7 +50,7 @@ function DEBUG () {
 }
 
 function TODO () {
-  echo "*** TODO ***: $@"
+  echo "*** TODO: $@"
 }
 
 function TEST_CMD () {
@@ -74,25 +98,6 @@ function SOURCE () {
 function die () {
   echo $1
   exit 99
-}
-
-DOTFILES_INSTALL_DIR=""
-function START () {
-  FINISH
-  INFO "*** $@"
-  DOTFILES_INSTALL_DIR="/tmp/$1"
-  rm -rf "$DOTFILES_INSTALL_DIR"
-  mkdir -p "$DOTFILES_INSTALL_DIR"
-  cd "$DOTFILES_INSTALL_DIR"
-}
-
-function FINISH () {
-  DEBUG "FINISH $DOTFILES_INSTALL_DIR"
-  if [[ -n $DOTFILES_INSTALL_DIR ]]; then
-    rm -rf $DOTFILES_INSTALL_DIR
-    cd $HOME
-    DOTFILES_INSTALL_DIR=""
-  fi
 }
 
 function DOWNLOAD () {

@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/kaniabi/autosync/iac/apps/tier1/.terraform'
+let g:netrw_dirhist_3='/home/kaniabi/.oh-my-zsh/cache/completions'
+let g:netrw_dirhist_2='/home/kaniabi/autosync'
+let g:netrw_dirhist_1='/home/kaniabi/autosync/iac/.git/modules'
