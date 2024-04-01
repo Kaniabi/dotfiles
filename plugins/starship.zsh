@@ -9,6 +9,7 @@ INSTALL_CMD snapd snap
 if (( ! $+commands[snap] )); then
   sudo snap install core
 fi
+EXPORT PATH=$PATH:/snap/bin
 
 if (( ! $+commands[starship] )); then
   sudo snap install starship --edge
