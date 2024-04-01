@@ -1,18 +1,13 @@
 # Command line customization (wip)
 
 TODO "Install starship"
-# if ( $IS_MAC ); then
-#   INSTALL_CMD starship
-# fi
-
-INSTALL_CMD snapd snap
-if (( ! $+commands[snap] )); then
-  sudo snap install core
-fi
-EXPORT PATH=$PATH:/snap/bin
-
-if (( ! $+commands[starship] )); then
-  sudo snap install starship --edge
+if ( $IS_MAC ); then
+  INSTALL_CMD starship
+else
+  if (( ! $+commands[starship] )); then
+    wget https://starship.rs/install.sh
+    sh ./install.sh -f -b ~/.local/bin
+  fi
 fi
 
 eval "$(starship init zsh)"
