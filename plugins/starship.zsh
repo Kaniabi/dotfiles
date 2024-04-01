@@ -5,6 +5,15 @@ TODO "Install starship"
 #   INSTALL_CMD starship
 # fi
 
+INSTALL_CMD snapd snap
+if (( ! $+commands[snap] )); then
+  sudo snap install core
+fi
+
+if (( ! $+commands[starship] )); then
+  sudo snap install starship --edge
+fi
+
 eval "$(starship init zsh)"
 SOURCE $HOME/.dotfiles/key-bindings.zsh
 

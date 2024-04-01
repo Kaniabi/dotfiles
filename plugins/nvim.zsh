@@ -4,6 +4,7 @@
 START neovim 'Text editor'
 INSTALL_CMD nvim neovim
 ALIAS vim "nvim"
+ALIAS vi "nvim"
 EXPORT EDITOR "nvim"
 
 if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
