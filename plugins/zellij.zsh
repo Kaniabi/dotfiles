@@ -1,3 +1,3 @@
 # Terminal multiplexer.
 
-TODO: 'Install zellij.'
+TODO 'Install zellij.'
