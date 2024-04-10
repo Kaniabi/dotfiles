@@ -9,3 +9,13 @@ else
   # INSTALL_CMD sam "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip"
   # INSTALL_CMD ecs-cli "https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest"
 fi
+
+# Aliases
+
+function awsin () {
+  aws sso login --profile=$1
+}
+
+function awsout () {
+  aws sso logout --profile=$1
+}

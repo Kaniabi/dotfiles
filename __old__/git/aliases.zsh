@@ -118,4 +118,3 @@ function gg () {
 function gdiff() {
   git diff --name-status "${@:-master}"
 }
-

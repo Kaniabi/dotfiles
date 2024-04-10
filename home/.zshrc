@@ -26,5 +26,10 @@ SOURCE $HOME/.dotfiles/key-bindings.zsh
 
 # ---
 
-SOURCE "$HOME/.zshrc.local"
 SOURCE "$HOME/.dotfiles/install"
+
+# # Load Git completion
+# source /usr/share/bash-completion/completions/git
+# zstyle ':completion:*:*:git:*' script $DITFILES/gitfast/git-completion.bash
+fpath=(~/.dotfiles/completion $fpath)
+autoload -Uz compinit && compinit
