@@ -1,0 +1,17 @@
+[user]
+name = "Alexandre Andrade"
+email = "kaniabi@gmail.com"
+
+[template-aliases]
+'gitlg' = '''
+concat(
+  change_id.shortest(8),
+  "/" ++ commit_id.shortest(8) ++ " -",
+  if(branches, " (" ++ branches ++ ") ", " "),
+  description.first_line(),
+  " (" ++ committer.timestamp().ago() ++ ") ",
+  committer.username() ++ " ",
+  if(conflict, "!!! CONFLICT !!!")
+)
+'''
+
