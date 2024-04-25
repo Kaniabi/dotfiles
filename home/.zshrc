@@ -11,9 +11,11 @@ export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+setopt inc_append_history
+setopt share_history
 export HISTFILE="$HOME/.zsh_history" # History filepath
-export HISTSIZE=10000                   # Maximum events for internal history
-export SAVEHIST=10000                   # Maximum events in history file
+export HISTSIZE=10000                # Maximum events for internal history
+export SAVEHIST=10000                # Maximum events in history file
 
 # dirs
 setopt AUTO_PUSHD           # Push the current directory visited on the stack.
