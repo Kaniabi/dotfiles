@@ -87,6 +87,13 @@ function INSTALL_GIT () {
   fi
 }
 
+function INSTALL_PKG () {
+  if dpkg -s $1 &> /dev/null; then
+    return
+  fi
+  INSTALL $1
+}
+
 function SOURCE () {
   if [[ ! -f $1 ]]; then
     return
