@@ -96,7 +96,7 @@ function gamend () {
 }
 
 function ggrepos () {
-  find . -name .git | xargs dirname | grep -v "/\." | sort
+  find . -name .git | xargs dirname | grep -v "/\." | grep -v "/__" | sort
 }
 
 function ggfetch () {
