@@ -99,16 +99,12 @@ function ggrepos () {
   find . -name .git | xargs dirname | grep -v "/\." | grep -v "/__" | sort
 }
 
-function ggfetch () {
-  REPOS=$(ggrepos)
-  parallel gfetch ::: $REPOS
-}
-
-function ggpull () {
+function ggsync () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    echo "********************************************************************* $i_repo"
-    hub -C $i_repo pull
+    echo -n "`realpath --relative-to=$PWD $i_repo`  "
+    hub -C $i_repo st
+    hub -C $i_repo sync
   done
 }
 
@@ -116,7 +112,7 @@ function ggst () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
     echo -n "`realpath --relative-to=$PWD $i_repo`  "
-    hub -C $i_repo st  # | tail -n +2
+    hub -C $i_repo st
   done
 }
 
@@ -129,5 +125,5 @@ function gg () {
 }
 
 function gdiff() {
-  git diff --name-status "${@:-master}"
+  git diff -w --color-moved
 }
