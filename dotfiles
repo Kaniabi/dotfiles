@@ -17,6 +17,12 @@ if [[ $(uname -a) == *"WSL2"* ]]; then
   export IS_WSL=true
 fi
 
+if ( $IS_MAC ); then
+  export USR_SHARE_DIR=/usr/local/share
+else
+  export USR_SHARE_DIR=/usr/share
+fi
+
 DOTFILES_INSTALL_DIR=""
 
 function START () {
@@ -87,8 +93,16 @@ function INSTALL_GIT () {
   fi
 }
 
+function CHECK_PKG () {
+  if ( $IS_MAC ); then
+    brew list | grep $1 &>> /dev/null
+  else
+    dpkg -s $1 &>> /dev/null
+  fi
+}
+
 function INSTALL_PKG () {
-  if dpkg -s $1 &> /dev/null; then
+  if CHECK_PKG $1; then
     return
   fi
   INSTALL $1

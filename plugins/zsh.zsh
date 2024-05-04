@@ -15,4 +15,4 @@
 
 
 INSTALL_PKG zsh-syntax-highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $USR_SHARE_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
