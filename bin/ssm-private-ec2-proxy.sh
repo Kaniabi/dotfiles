@@ -6,8 +6,12 @@ MAX_ITERATION=5
 SLEEP_DURATION=5
 
 # Arguments passed from SSH client
-HOST=$1
-PORT=${2:-22}
+HOST=$1;shift
+if [[ -n $1 ]]; then
+  PORT=${1};shift
+else
+  PORT=22
+fi
 
 echo $HOST
 
