@@ -44,3 +44,5 @@
 	program = gpg2
 [ini]
 	defaultBranch = main
+[diff]
+	colorMoved = default
