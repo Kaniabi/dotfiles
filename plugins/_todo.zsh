@@ -9,5 +9,5 @@
 
 START private.env 'Private environment variables from 1Password'
 set -a
-SOURCE /tmp/.private.env
+SOURCE $HOME/.private.env
 set +a
