@@ -28,7 +28,7 @@ $(ls -1 './tfvars' | gawk '{ sub(/.tfvars/, "", $1); print("  *", $1) }')
 function _tf_title () {
   COLOR='\033[0;34m'
   RESET='\033[0m'
-  echo -e "${COLOR}tf: ************************************************************************ $*${RESET}"
+  echo -e "${COLOR}# $*${RESET}"
 }
 
 
