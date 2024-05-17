@@ -1,3 +1,5 @@
+# Private environment variables from 1Password
+
 # TODO: How to install newer version on Debian12?
 # apt_install python3-launchpadlib software-properties-common
 # sudo add-apt-repository ppa:neovim-ppa/stable -y
@@ -7,7 +9,4 @@
 # git_install https://github.com/zplug/zplug $ZPLUG_HOME
 # SOURCE $ZPLUG_HOME/init.zsh
 
-START private.env 'Private environment variables from 1Password'
-set -a
-SOURCE $HOME/.private.env
-set +a
+set -a && SOURCE $HOME/.private.env && set +a

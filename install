@@ -18,6 +18,7 @@ DOTFILES_SYMLINK .config/starship.toml
 #   ALIAS apt "sudo nala"
 # f
 
+export LC_COLLATE=C
 for i_plugin ("$HOME"/.dotfiles/plugins/*.zsh); do
   START $(basename ${i_plugin%.*}) "$(head -n1 $i_plugin | cut -c 3-)"
   SOURCE "${i_plugin}"

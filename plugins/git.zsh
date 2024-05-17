@@ -81,7 +81,7 @@ function gb () {
 
 }
 function gbb () {
-  git branch -av 
+  git branch -av
 }
 
 function gbst () {
@@ -140,5 +140,5 @@ function gg () {
 }
 
 function gdiff() {
-  git diff -w --color-moved
+  git diff --name-status
 }

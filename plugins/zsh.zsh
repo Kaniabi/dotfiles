@@ -13,6 +13,5 @@
 # zpm load zpm-zsh/colors
 # zpm load zsh-users/zsh-syntax-highlighting
 
-
 INSTALL_PKG zsh-syntax-highlighting
 source $USR_SHARE_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

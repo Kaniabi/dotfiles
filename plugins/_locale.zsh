@@ -1,4 +1,7 @@
-# TODO: This is failing on Debian12 (remote-machine).
+# Setup linux locale
+
+TODO 'Disabled. This is failing on Debian12 (remote-machine).'
+
 #if (( ! $+commands[locale-gen] ))
 #then
 #  sudo apt install locales

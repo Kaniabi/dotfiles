@@ -23,12 +23,13 @@ else
   export USR_SHARE_DIR=/usr/share
 fi
 
+DOTFILES_INSTALL_PREFIX=${DOTFILES_INSTALL_PREFIX:-$(mktemp -d /tmp/dotfiles-XXXXXX)}
 DOTFILES_INSTALL_DIR=""
 
 function START () {
   FINISH
   INFO "*** $1 - ${2:-.}"
-  DOTFILES_INSTALL_DIR="/tmp/$1"
+  DOTFILES_INSTALL_DIR="$DOTFILES_INSTALL_PREFIX/$1"
   rm -rf "$DOTFILES_INSTALL_DIR"
   mkdir -p "$DOTFILES_INSTALL_DIR"
   pushd "$DOTFILES_INSTALL_DIR"
@@ -41,6 +42,7 @@ function FINISH () {
     popd
     DOTFILES_INSTALL_DIR=""
   fi
+  rm -rf $DOTFILES_INSTALL_PREFIX
 }
 
 function INFO () {
@@ -56,7 +58,7 @@ function DEBUG () {
 }
 
 function TODO () {
-  echo "*** TODO: $@"
+  echo "    TODO: $@"
 }
 
 function TEST_CMD () {
