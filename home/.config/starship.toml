@@ -18,7 +18,7 @@ $php\
 $java\
 $kotlin\
 $haskell\
-$terraform\ 
+$terraform\
 $python\
 [](fg:color_blue bg:color_bg3)\
 $docker_context\
@@ -167,3 +167,6 @@ vimcmd_symbol = '[](bold fg:color_green)'
 vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
 vimcmd_replace_symbol = '[](bold fg:color_purple)'
 vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+
+[cmd_duration]
+min_time = 2

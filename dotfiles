@@ -76,12 +76,12 @@ function go_install_cmd () {
 }
 
 function url_install_cmd () {
-  local CMD=$1
-  local URL=$2
+  local CMD=$1;shift
+  local URL=$2;shift
   if (( ! $+commands[$CMD] ))
   then
-    INFO "url_install_cmd $@"
-    curl -s -o- $URL | bash
+    INFO "url_install_cmd $CMD ($URL) $@"
+    curl -s -o- $URL | bash "$@"
   fi
 }
 
@@ -134,20 +134,20 @@ function DOWNLOAD () {
 
 function INSTALL () {
   INFO "INSTALL $@"
-  local PACKAGE=$1
+  local PACKAGE=$1;shift
   if [[ $PACKAGE == ("http:"*|"https:"*|"s3://"*) ]]; then
     DOWNLOAD $PACKAGE
     PACKAGE=$(basename $PACKAGE)
   fi
   if [[ $PACKAGE == *".sh" ]]; then
-    bash $PACKAGE
+    bash $PACKAGE "$@"
   elif [[ $IS_MAC == true ]]; then
     brew install -q $PACKAGE
   elif [[ $PACKAGE == *".deb" ]]; then
     shift
-    sudo dpkg -i $PACKAGE $@
+    sudo dpkg -i $PACKAGE "$@"
   else
-    sudo apt-get install --no-install-recommends -y $@
+    sudo apt-get install --no-install-recommends -y "$@"
   fi
 }
 
