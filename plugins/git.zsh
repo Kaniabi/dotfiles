@@ -75,9 +75,9 @@ function gb () {
   git for-each-ref  \
     --sort=committerdate refs/heads/ \
     --format='* %(color:yellow)%(objectname:short)%(color:reset) - %(color:yellow)(%(refname:lstrip=2))%(color:reset) %(subject) %(color:green)(%(committerdate:relative))%(color:reset) %(color:blue)%(authoremail)%(color:reset)'
-  git for-each-ref  \
-    --sort=committerdate refs/remotes/origin/ \
-    --format='* %(color:yellow)%(objectname:short)%(color:reset) - %(color:red)(%(refname:lstrip=2))%(color:reset) %(subject) %(color:green)(%(committerdate:relative))%(color:reset) %(color:blue)%(authoremail)%(color:reset)'
+  # git for-each-ref  \
+  #   --sort=committerdate refs/remotes/origin/ \
+  #   --format='* %(color:yellow)%(objectname:short)%(color:reset) - %(color:red)(%(refname:lstrip=2))%(color:reset) %(subject) %(color:green)(%(committerdate:relative))%(color:reset) %(color:blue)%(authoremail)%(color:reset)'
 
 }
 function gbb () {
