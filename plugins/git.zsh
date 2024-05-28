@@ -111,12 +111,16 @@ function gamend () {
 }
 
 function ggrepos () {
-  find . -name .git | xargs dirname | grep -v "/\." | grep -v "/__" | sort
+  find . -name .git | xargs dirname | grep -v "/\." | sort
 }
 
 function ggsync () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
+    if [[ $i_repo == "./_"* ]]; then
+      echo "$i_repo: skip"
+      continue
+    fi
     echo -n "`realpath --relative-to=$PWD $i_repo`  "
     hub -C $i_repo st
     hub -C $i_repo sync
@@ -126,6 +130,9 @@ function ggsync () {
 function ggst () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
+    if [[ $i_repo == "./_"* ]]; then
+      continue
+    fi
     echo -n "`realpath --relative-to=$PWD $i_repo`  "
     hub -C $i_repo st
   done
@@ -134,6 +141,9 @@ function ggst () {
 function gg () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
+    if [[ $i_repo == "./_"* ]]; then
+      continue
+    fi
     echo "********************************************************************* $i_repo"
     hub -C $i_repo "$@"
   done
