@@ -1,8 +1,6 @@
 # System basic commands
 
-INSTALL_CMD curl
 INSTALL_CMD unzip
-INSTALL_CMD wget
 INSTALL_CMD jq
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail

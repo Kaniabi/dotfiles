@@ -19,3 +19,7 @@ function awsin () {
 function awsout () {
   aws sso logout --profile=$1
 }
+
+function awsecr () {
+  aws --profile mi-shared ecr get-login-password | docker login -u AWS --password-stdin "https://050946403637.dkr.ecr.ca-central-1.amazonaws.com"
+}

@@ -11,3 +11,7 @@ eval "$(pyenv virtualenv-init -)"
 
 TODO Install 'deen' virtualenv if needed.
 pyenv shell deen || true
+
+# Zops
+alias zops="poetry -C ~/Code/zops run zops"
+alias zz="poetry -C ~/Code/zops run zz"

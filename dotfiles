@@ -146,8 +146,11 @@ function INSTALL () {
   elif [[ $PACKAGE == *".deb" ]]; then
     shift
     sudo dpkg -i $PACKAGE "$@"
+  elif [[ $PACKAGE == *".zip" ]]; then
+    unzip $PACKAGE
+    TODO "Install unzipped package."
   else
-    sudo apt-get install --no-install-recommends -y "$@"
+    sudo apt-get install --no-install-recommends -y $PACKAGE "$@"
   fi
 }
 
