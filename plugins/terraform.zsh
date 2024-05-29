@@ -6,6 +6,10 @@ if (( ! $+commands[tfenv] )); then
 fi
 # TEST_CMD tfenv --version
 
+go_install_cmd terraform-config-inspect github.com/hashicorp/terraform-config-inspect@latest
+
+#=================================================================================================== Functions
+
 function tfw () {
   if [[ -z $1 ]]; then
     terraform workspace list

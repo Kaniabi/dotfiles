@@ -4,6 +4,7 @@ INSTALL_CMD unzip
 INSTALL_CMD jq
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
+INSTALL_CMD envsubst gettext-base
 
 function ffind () {
   echo "find . -name '*$1*'"
