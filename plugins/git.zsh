@@ -117,7 +117,7 @@ function ggrepos () {
 function ggsync () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    if [[ $i_repo == "./_"* ]]; then
+    if [[ $i_repo == *"/_"* ]]; then
       echo "$i_repo: skip"
       continue
     fi
@@ -130,7 +130,7 @@ function ggsync () {
 function ggst () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    if [[ $i_repo == "./_"* ]]; then
+    if [[ $i_repo == *"/_"* ]]; then
       continue
     fi
     echo -n "`realpath --relative-to=$PWD $i_repo`  "
@@ -141,7 +141,7 @@ function ggst () {
 function gg () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    if [[ $i_repo == "./_"* ]]; then
+    if [[ $i_repo == *"/_"* ]]; then
       continue
     fi
     echo "********************************************************************* $i_repo"
