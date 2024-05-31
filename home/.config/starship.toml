@@ -136,9 +136,8 @@ format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [python]
 symbol = ""
-pyenv_version_name = true
 style = "bg:color_blue"
-format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+format = '[[ $symbol( $virtualenv) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [terraform]
 symbol = "󱁢"

@@ -6,3 +6,7 @@ for i_cmd in ami.list ami.build ec2.list ec2.shell ec2.start asg.list asg.update
 done
 alias ec2.user_data="$ZOPS_AWS_PREFIX ec2.shell --command=\"tail -n50 /var/log/user-data.log\""
 alias ec2.docker_ps="$ZOPS_AWS_PREFIX ec2.shell --command=\"sudo docker ps -a\""
+
+# Zops
+# alias zops="poetry -C ~/Code/zops run zops"
+# alias zz="poetry -C ~/Code/zops run zz"

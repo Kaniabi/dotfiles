@@ -1,3 +1,5 @@
+# Stuff for zsh
+
 # export ZPLUG_HOME=~/.zplug
 # if [[ ! -f ~/.zplug/init.zsh ]]; then
 #   git clone https://github.com/zplug/zplug $ZPLUG_HOME
