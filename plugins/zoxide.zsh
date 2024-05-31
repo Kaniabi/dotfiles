@@ -2,11 +2,12 @@
 
 INSTALL_GIT https://github.com/junegunn/fzf.git $HOME/.local/fzf
 EXPORT PATH "$PATH:$HOME/.local/fzf/bin"
-source <(fzf --zsh)
+# TODO: This raises an error "Unknown option: --zsh"
+# source <(fzf --zsh)
 
 INSTALL_CMD zoxide https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh
-eval "$(zoxide init zsh)"
-ALIAS cd z
+eval "$(zoxide init zsh --cmd=cd)"
+# ALIAS cd z
 
 # # Setup
 # rm /home/kaniabi/.config/local/share/zoxide/db.zo
