@@ -122,7 +122,7 @@ function tfshow () {
 }
 
 function tfrepos () {
-  find -name .terraform | xargs realpath | xargs dirname | grep -v "\."
+  find -name .terraform | xargs grealpath | xargs dirname | grep -v "\."
 }
 
 function ttfst () {

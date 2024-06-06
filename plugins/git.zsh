@@ -121,7 +121,7 @@ function ggsync () {
       echo "$i_repo: skip"
       continue
     fi
-    echo -n "`realpath --relative-to=$PWD $i_repo`  "
+    echo -n "`grealpath --relative-to=$PWD $i_repo`  "
     hub -C $i_repo st
     hub -C $i_repo sync
   done
@@ -133,7 +133,7 @@ function ggst () {
     if [[ $i_repo == *"/_"* ]]; then
       continue
     fi
-    echo -n "`realpath --relative-to=$PWD $i_repo`  "
+    echo -n "`grealpath --relative-to=$PWD $i_repo`  "
     hub -C $i_repo st
   done
 }

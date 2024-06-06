@@ -102,7 +102,7 @@ function ggpull () {
 function ggst () {
   REPOS=$(ggrepos)
   for i_repo in ${(f)REPOS}; do
-    echo -n "`realpath --relative-to=$PWD $i_repo`  "
+    echo -n "`grealpath --relative-to=$PWD $i_repo`  "
     hub -C $i_repo st  # | tail -n +2
   done
 }

@@ -9,7 +9,7 @@ function my_git() {
   git -C $REPO "$@"
 }
 
-echo "* `realpath --relative-to=$PWD $1`"
+echo "* `grealpath --relative-to=$PWD $1`"
 
 REPO=$1
 

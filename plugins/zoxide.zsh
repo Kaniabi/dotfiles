@@ -12,6 +12,6 @@ eval "$(zoxide init zsh --cmd=cd)"
 # # Setup
 # rm /home/kaniabi/.config/local/share/zoxide/db.zo
 # cd Code
-# find . -maxdepth 2 -type d | xargs realpath | xargs zoxide add
+# find . -maxdepth 2 -type d | xargs grealpath | xargs zoxide add
 # cd autosync
-# find . -maxdepth 2 -type d | xargs realpath | xargs zoxide add
+# find . -maxdepth 2 -type d | xargs grealpath | xargs zoxide add

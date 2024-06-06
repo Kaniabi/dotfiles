@@ -16,6 +16,7 @@ fi
 echo $HOST
 
 # Start ssm session
+export PATH=$PATH:/usr/local/bin
 aws ssm start-session --target $HOST \
   --document-name AWS-StartSSHSession \
   --parameters portNumber=${PORT} \
