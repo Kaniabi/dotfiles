@@ -8,4 +8,3 @@
   lj = log -n20 --pretty=format:'{%n"commit":"%H",%n"author":"%an",%n"author_email":"%ae",%n"date":"%ad",%n"message":"%f"%n}'
   st = status -b -s
   cont = rebase --continue
-

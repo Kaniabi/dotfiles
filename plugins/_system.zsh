@@ -2,9 +2,14 @@
 
 INSTALL_CMD unzip
 INSTALL_CMD jq
+INSTALL_CMD realpath coreutils
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
 INSTALL_CMD envsubst gettext-base
+
+if ( ! $IS_MAC ); then
+  function grealpath { realpath "$@" }
+fi
 
 function ffind () {
   echo "find . -name '*$1*'"
