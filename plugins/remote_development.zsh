@@ -6,7 +6,7 @@ function _redev_aws () {
 }
 
 function redev () {
-  export REDEV_PROFILE="internal"
+  export REDEV_PROFILE="mi-is"
   export REDEV_REGION="ca-central-1"
   export REDEV_SECURITY_GROUP_NAME="mi-is-infra_kaniabi"
   export REDEV_INSTANCE_ID="$(_redev_aws ec2 describe-instances --filters "Name=tag:Name,Values=$REDEV_SECURITY_GROUP_NAME" --query "Reservations[*].Instances[*].[InstanceId]" --output text | tail -n1)"

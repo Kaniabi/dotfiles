@@ -73,16 +73,16 @@ style_root = "bg:color_orange fg:color_fg0"
 format = '[ $user ]($style)'
 
 [hostname]
-# show_always = true
+ssh_only = false
 style = "bg:color_orange fg:color_fg0"
 # style_root = "bg:color_orange fg:color_fg0"
 format = '[ $hostname ]($style)'
 
 [directory]
-style = "fg:color_fg0 bg:color_yellow"
+style = "bg:color_yellow fg:color_fg0"
 format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+# truncation_length = 0
+# truncation_symbol = "…/"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
