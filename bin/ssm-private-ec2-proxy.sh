@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AWS_PROFILE=${AWS_PROFILE:-'internal'}
+AWS_PROFILE=${AWS_PROFILE:-'mi-is'}
 AWS_REGION=${AWS_REGION:-'ca-central-1'}
 MAX_ITERATION=5
 SLEEP_DURATION=5
@@ -22,4 +22,3 @@ aws ssm start-session --target $HOST \
   --parameters portNumber=${PORT} \
   --profile ${AWS_PROFILE} \
   --region ${AWS_REGION}
-
