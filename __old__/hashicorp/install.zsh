@@ -8,7 +8,7 @@ export PATH="$HOME/.tfenv/bin:$PATH"
 
 if (( ! $+commands[terraform] ))
 then
-  tfenv install
+  tfenv install latest
   tfenv use
 fi
 
