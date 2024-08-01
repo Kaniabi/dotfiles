@@ -9,3 +9,10 @@
 * `test`: Test the dotfiles setup and installation in a docker container.
 
 
+TODO:
+
+* Initial setup in a new remote machine needs work;
+* Install *docker* in a remote machine (but not on WSL);
+* Create ~/venv/deen if it doesn't exists;
+* Install poetry and zops?
+* Replace private repository with encrypted private files.

@@ -12,6 +12,8 @@ DOTFILES_SYMLINK .gitconfig.local
 DOTFILES_SYMLINK .gitconfig
 DOTFILES_SYMLINK .config/starship.toml
 
+mkdir -p ~/.config
+
 # START nala 'replacements for apt'
 # if [[ $MACHINE != "Mac" ]]; then
 #   INSTALL_CMD nala
