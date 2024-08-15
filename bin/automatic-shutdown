@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -eou pipefail
+
+LOG_FILEPATH=/tmp/automatic-shutdown.log
+SHUTDOWN_TIME=30
+
+exec > >(tee -a /tmp/automatic-shutdown.log) 2>&1
+
+DATETIME="$(date +'%Y-%m-%dT%H:%M:%S')"
+
+function is_vscode_running () {
+  return ps x | grep "fileWatcher" | grep "bookstrap-fork" > /dev/null
+}
+
+if is_vscode_running ; then
+  echo "$DATETIME: checking: vscode still running."
+  if [[ `sudo shutdown --show 2>&1 /dev/null` ]]; then
+    echo "$DATETIME: vscode still running (cancel shutdown)."
+    sudo shutdown -c
+  fi
+else
+  echo "$DATETIME: checking: vscode not running."
+  if [[ ! `sudo shutdown --show 2>&1 /dev/null` ]]; then
+    echo "$DATETIME: vscode not running (scheduling shutdown)."
+    sudo shutdown $SHUTDOWN_TIME
+  fi
+fi
