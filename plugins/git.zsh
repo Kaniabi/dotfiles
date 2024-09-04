@@ -70,15 +70,13 @@ function gb_old () {
 }
 
 function gb () {
-#    lg =  log --oneline --graph --decorate -n10 --pretty=format:'%C(yellow)%h%Creset -%C(bold yellow)%d%Creset %s %C(green)(%ar)%C(bold blue) <%an>%Creset' --abbrev-commit
-
   git for-each-ref  \
     --sort=committerdate refs/heads/ \
     --format='* %(color:yellow)%(objectname:short)%(color:reset) - %(color:yellow)(%(refname:lstrip=2))%(color:reset) %(subject) %(color:green)(%(committerdate:relative))%(color:reset) %(color:blue)%(authoremail)%(color:reset)'
+  # lg =  log --oneline --graph --decorate -n10 --pretty=format:'%C(yellow)%h%Creset -%C(bold yellow)%d%Creset %s %C(green)(%ar)%C(bold blue) <%an>%Creset' --abbrev-commit
   # git for-each-ref  \
   #   --sort=committerdate refs/remotes/origin/ \
   #   --format='* %(color:yellow)%(objectname:short)%(color:reset) - %(color:red)(%(refname:lstrip=2))%(color:reset) %(subject) %(color:green)(%(committerdate:relative))%(color:reset) %(color:blue)%(authoremail)%(color:reset)'
-
 }
 function gbb () {
   git branch -av

@@ -48,3 +48,8 @@ SOURCE "$HOME/.dotfiles/install"
 # zstyle ':completion:*:*:git:*' script $DITFILES/gitfast/git-completion.bash
 fpath=(~/.dotfiles/completion $fpath)
 autoload -Uz compinit && compinit
+export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
+eval "$(basher init - zsh)"             ##basher5ea843
+
+sudo shutdown 3:00
+
