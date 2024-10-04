@@ -1,5 +1,7 @@
 # 'Autosync stuff'
 
+export DATA_DIR="$HOME/Code/autosync/_data"
+
 export UNHAGGLE_REPO="$HOME/Code/autosync/unhaggle"
 export UNHAGGLE_DATA="$HOME/Code/autosync/_data"
 
@@ -16,3 +18,6 @@ export UH_INVENTORY_REPO="$HOME/Code/autosync/inventory"
 export UH_INVENTORY_DATA="$HOME/Code/autosync/_data"
 
 export CONTAINER_UID="$(id -u)"
+
+export AWS_PROFILE=mi-shared
+

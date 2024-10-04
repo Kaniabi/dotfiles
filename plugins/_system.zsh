@@ -6,6 +6,7 @@ INSTALL_CMD realpath coreutils
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
 INSTALL_CMD envsubst gettext-base
+INSTALL_CMD inotifywait inotify-tools
 
 if ( ! $IS_MAC ); then
   function grealpath { realpath "$@" }
@@ -34,4 +35,11 @@ function genpasswd () {
     fi
   done
   echo $RESULT
+}
+
+function block_for_change {
+  [[ -z "${1-}" ]] && echo "Usage: block_for_change <PATH>" && exit 9
+  inotifywait --recursive \
+    --event modify,move,create,delete \
+    $1
 }

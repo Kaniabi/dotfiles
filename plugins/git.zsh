@@ -148,5 +148,5 @@ function gg () {
 }
 
 function gdiff() {
-  git diff --name-status
+  git diff --name-status "$@"
 }
