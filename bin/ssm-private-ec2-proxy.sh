@@ -1,9 +1,7 @@
 #!/bin/bash
 
 AWS_PROFILE=${AWS_PROFILE:-'mi-is'}
-AWS_REGION=${AWS_REGION:-'ca-central-1'}
-MAX_ITERATION=5
-SLEEP_DURATION=5
+AWS_REGION=${AWS_REGION:-'sa-east-1'}
 
 # Arguments passed from SSH client
 HOST=$1;shift
