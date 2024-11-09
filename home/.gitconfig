@@ -37,12 +37,14 @@
 [rebase]
     autoSquash = true
 [user]
-	signingkey = 464BDFA9
+	signingkey = E249D6506B0C5533
 	name = Alexandre Andrade
 	email = kaniabi@gmail.com
 [gpg]
-	program = gpg2
+	program = /usr/bin/gpg
 [ini]
 	defaultBranch = main
 [diff]
 	colorMoved = default
+[commit]
+	gpgsign = true

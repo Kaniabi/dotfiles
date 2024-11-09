@@ -11,6 +11,9 @@ export TIER3_DATA="$HOME/Code/autosync/_data"
 export TIER1_REPO="$HOME/Code/autosync/tier1"
 export TIER1_DATA="$HOME/Code/autosync/_data"
 
+export UH_CORE_REPO="$HOME/Code/autosync/core"
+export UH_CORE_DATA="$HOME/Code/autosync/_data"
+
 export API_CLIENTS_REPO="$HOME/Code/autosync/api_clients"
 export API_CLIENTS_DATA="$HOME/Code/autosync/_data"
 
@@ -20,4 +23,3 @@ export UH_INVENTORY_DATA="$HOME/Code/autosync/_data"
 export CONTAINER_UID="$(id -u)"
 
 export AWS_PROFILE=mi-shared
-
