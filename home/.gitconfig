@@ -41,7 +41,7 @@
 	name = Alexandre Andrade
 	email = kaniabi@gmail.com
 [gpg]
-	program = /usr/bin/gpg
+	program = /opt/homebrew/bin/gpg
 [ini]
 	defaultBranch = main
 [diff]

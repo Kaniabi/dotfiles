@@ -15,7 +15,6 @@ __fix_max_user_watches
 
 INSTALL_CMD unzip
 INSTALL_CMD jq
-INSTALL_CMD realpath coreutils
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
 INSTALL_CMD envsubst gettext-base
@@ -23,7 +22,10 @@ INSTALL_CMD inotifywait inotify-tools
 INSTALL_CMD strings binutils
 
 if ( ! $IS_MAC ); then
+  INSTALL_CMD realpath coreutils
   function grealpath { realpath "$@" }
+else
+  INSTALL_CMD grealpath coreutils
 fi
 
 function ffind () {

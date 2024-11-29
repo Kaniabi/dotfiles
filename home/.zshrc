@@ -50,3 +50,5 @@ fpath=(~/.dotfiles/completion $fpath)
 autoload -Uz compinit && compinit
 export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
 eval "$(basher init - zsh)"             ##basher5ea843
+export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
+eval "$(basher init - zsh)"             ##basher5ea843

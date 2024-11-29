@@ -1,0 +1,4 @@
+#!/bin/zsh
+set -eo pipefail
+
+darwin-rebuild switch --flake ~/.config/nix-darwin#mcbook

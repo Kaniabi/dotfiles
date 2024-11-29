@@ -2,6 +2,7 @@
 
 if ( $IS_MAC ); then
   INSTALL_CMD aws awscli
+  export PATH=$PATH:/usr/local/sessionmanagerplugin/bin
 else
   INSTALL_CMD aws "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
   # NOTE: Not working in remote dev.
