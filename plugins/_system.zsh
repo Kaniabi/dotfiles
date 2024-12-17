@@ -7,6 +7,7 @@ INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
 INSTALL_CMD envsubst gettext-base
 INSTALL_CMD inotifywait inotify-tools
+INSTALL_CMD strings binutils
 
 if ( ! $IS_MAC ); then
   function grealpath { realpath "$@" }

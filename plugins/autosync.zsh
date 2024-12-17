@@ -8,6 +8,9 @@ export UNHAGGLE_DATA="$HOME/Code/autosync/_data"
 export TIER3_REPO="$HOME/Code/autosync/apps/tier3"
 export TIER3_DATA="$HOME/Code/autosync/_data"
 
+export PI_REPO="$HOME/Code/autosync/apps/pi"
+export PI_DATA="$HOME/Code/autosync/_data"
+
 export TIER1_REPO="$HOME/Code/autosync/apps/tier1"
 export TIER1_DATA="$HOME/Code/autosync/_data"
 
