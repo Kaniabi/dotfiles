@@ -102,15 +102,6 @@ function tfp() {
   _tf plan "$@"
 }
 
-function tfapply() {
-  for i in "$@"; do
-    echo "****************************************************************************************** $i"
-    APP="${i%-*}"
-    cd $HOME/Code/autosync/iac/terraform/apps/$APP
-    _tf apply "$i" -auto-approve
-  done
-}
-
 function tfa() {
   _tf apply "$@"
 }
@@ -156,22 +147,31 @@ function ttfpp () {
   done
 }
 
-function tfapply () {
-  if [[ -z $1 ]]; then
-    echo "Usage: tfapply <ENVIRONMENT>"
-    exit 9
-  fi
-  if [[ $1 == "prod" ]]; then
-    echo "ERROR: You should not use this command for production environment."
-    exit 9
-  fi
-  tfi
-  tfw "$1"
-  tfa -auto-approve
-  # asg.update "$1" 2
-  #sleep 150
-  #asg.update "$1" 1
+function tfapply() {
+  for i in "$@"; do
+    echo "****************************************************************************************** $i"
+    APP="${i%-*}"
+    cd $HOME/Code/autosync/iac/terraform/apps/$APP
+    _tf apply "$i" -auto-approve
+  done
 }
+
+# function tfapply () {
+#   if [[ -z $1 ]]; then
+#     echo "Usage: tfapply <ENVIRONMENT>"
+#     exit 9
+#   fi
+#   if [[ $1 == "prod" ]]; then
+#     echo "ERROR: You should not use this command for production environment."
+#     exit 9
+#   fi
+#   tfi
+#   tfw "$1"
+#   tfa -auto-approve
+#   # asg.update "$1" 2
+#   #sleep 150
+#   #asg.update "$1" 1
+# }
 
 function tfplan () {
   tfi
