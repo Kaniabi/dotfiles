@@ -1,5 +1,18 @@
 # System basic commands
 
+function __fix_max_user_watches () {
+  # Fix the max user watches so VSCode doesn't complain.
+  local new_max=524288
+  local current=$(cat /proc/sys/fs/inotify/max_user_watches)
+  if [[ $current -ge $new_max ]]; then
+    return
+  fi
+  echo "fs.inotify.max_user_watches=$new_max" | sudo tee /etc/sysctl.d/40-max-user-watches.conf
+  sudo sysctl --system
+}
+
+__fix_max_user_watches
+
 INSTALL_CMD unzip
 INSTALL_CMD jq
 INSTALL_CMD realpath coreutils
