@@ -1,6 +1,9 @@
 # IaC tool.
 
 EXPORT PATH "$PATH:$HOME/.tfenv/bin"
+EXPORT TF_LOG ERROR
+EXPORT TF_X_CONCISE_DIFF 1
+
 if (( ! $+commands[tfenv] )); then
   INSTALL_GIT https://github.com/tfutils/tfenv.git $HOME/.tfenv
 fi
