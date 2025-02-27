@@ -40,8 +40,8 @@
 	signingkey = E249D6506B0C5533
 	name = Alexandre Andrade
 	email = kaniabi@gmail.com
-[gpg]
-	program = /opt/homebrew/bin/gpg
+; [gpg]
+; 	program = /opt/homebrew/bin/gpg
 [ini]
 	defaultBranch = main
 [diff]

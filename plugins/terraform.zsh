@@ -155,6 +155,15 @@ function tfapply() {
     echo "****************************************************************************************** $i"
     APP="${i%-*}"
     cd $HOME/Code/autosync/iac/terraform/apps/$APP
+    _tf apply "$i"
+  done
+}
+
+function ttfapply() {
+  for i in "$@"; do
+    echo "****************************************************************************************** $i"
+    APP="${i%-*}"
+    cd $HOME/Code/autosync/iac/terraform/apps/$APP
     _tf apply "$i" -auto-approve
   done
 }
