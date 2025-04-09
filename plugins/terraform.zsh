@@ -189,3 +189,7 @@ function tfplan () {
   tfi
   tfp "$@"
 }
+
+function tfunlock () {
+  terraform force-unlock -force "$@"
+}

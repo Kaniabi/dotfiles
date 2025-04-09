@@ -17,6 +17,8 @@ INSTALL_CMD unzip
 INSTALL_CMD jq
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
+INSTALL_CMD gawk
+INSTALL_CMD make
 INSTALL_CMD envsubst gettext-base
 INSTALL_CMD inotifywait inotify-tools
 INSTALL_CMD strings binutils
