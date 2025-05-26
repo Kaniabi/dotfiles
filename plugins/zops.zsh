@@ -9,7 +9,8 @@ alias ec2.docker_ps="$ZOPS_AWS_PREFIX ec2.shell --command=\"sudo docker ps -a\""
 
 function codegen () {
   zz codegen apply .
-  terraform fmt --recursive . && git diff -w .
+  git diff -w .
+  git ls-files -m '*.tf' | xargs terraform fmt
 }
 
 # Zops

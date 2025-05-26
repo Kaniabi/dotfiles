@@ -187,3 +187,9 @@ function DOTFILES_SYMLINK () {
     ln -s $SOURCE $TARGET
   fi
 }
+
+function EXTRACT_URL () {
+  local URL=$1
+  local DEST=$2
+  curl -L $URL | tar -xz -C $DEST
+}
