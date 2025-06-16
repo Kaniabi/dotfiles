@@ -11,7 +11,7 @@ function __fix_max_user_watches () {
   sudo sysctl --system
 }
 
-__fix_max_user_watches
+( ! $IS_MAC ) && __fix_max_user_watches
 
 INSTALL_CMD unzip
 INSTALL_CMD jq
@@ -23,7 +23,7 @@ INSTALL_CMD btop
 INSTALL_CMD make
 INSTALL_CMD bzip2
 INSTALL_CMD envsubst gettext-base
-INSTALL_CMD inotifywait inotify-tools
+( ! $IS_MAC ) && INSTALL_CMD inotifywait inotify-tools
 INSTALL_CMD strings binutils
 
 if ( ! $IS_MAC ); then
