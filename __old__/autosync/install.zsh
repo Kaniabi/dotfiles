@@ -53,8 +53,8 @@ function _redev_aws () {
 
 function redev () {
   REDEV_PROFILE="mi-is"
-  REDEV_REGION="ca-central-1"
-  REDEV_INSTANCE_ID="i-0ab78ef84f55fa9b7"
+  REDEV_REGION="us-east-2"
+  REDEV_INSTANCE_ID="i-0fe8ea64965ee0a60"
   REDEV_SECURITY_GROUP_ID="sg-0a09dfd46f63d075b"
   REDEV_SECURITY_GROUP_NAME="mi-is-infra_kaniabi"
 

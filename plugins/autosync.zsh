@@ -34,4 +34,4 @@ export UH_INVENTORY_DATA="$HOME/Code/autosync/_data"
 
 export CONTAINER_UID="$(id -u)"
 
-export AWS_PROFILE=mi-shared
+## export AWS_PROFILE=mi-shared
