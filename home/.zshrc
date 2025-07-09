@@ -48,7 +48,11 @@ SOURCE "$HOME/.dotfiles/install"
 # zstyle ':completion:*:*:git:*' script $DITFILES/gitfast/git-completion.bash
 fpath=(~/.dotfiles/completion $fpath)
 autoload -Uz compinit && compinit
-export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
-eval "$(basher init - zsh)"             ##basher5ea843
-export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
-eval "$(basher init - zsh)"             ##basher5ea843
+
+# # Basher
+# export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
+# eval "$(basher init - zsh)"             ##basher5ea843
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
