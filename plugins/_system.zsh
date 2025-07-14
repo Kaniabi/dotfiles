@@ -13,7 +13,9 @@ function __fix_max_user_watches () {
 
 ( ! $IS_MAC ) && __fix_max_user_watches
 
+
 INSTALL_CMD unzip
+INSTALL_CMD zip
 INSTALL_CMD jq
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail

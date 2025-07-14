@@ -2,16 +2,16 @@
 
 export DATA_DIR="$HOME/Code/autosync/_data"
 
-export UNHAGGLE_REPO="$HOME/Code/autosync/apps/unhaggle"
+export UNHAGGLE_REPO="$HOME/Code/autosync/unhaggle"
 export UNHAGGLE_DATA="$HOME/Code/autosync/_data"
 
-export TIER3_REPO="$HOME/Code/autosync/apps/tier3"
+export TIER3_REPO="$HOME/Code/autosync/tier3"
 export TIER3_DATA="$HOME/Code/autosync/_data"
 
-export PI_REPO="$HOME/Code/autosync/apps/pi"
+export PI_REPO="$HOME/Code/autosync/pi"
 export PI_DATA="$HOME/Code/autosync/_data"
 
-export TIER1_REPO="$HOME/Code/autosync/apps/tier1"
+export TIER1_REPO="$HOME/Code/autosync/tier1"
 export TIER1_DATA="$HOME/Code/autosync/_data"
 
 export UH_CORE_REPO="$HOME/Code/autosync/libs/core"

@@ -49,10 +49,6 @@ SOURCE "$HOME/.dotfiles/install"
 fpath=(~/.dotfiles/completion $fpath)
 autoload -Uz compinit && compinit
 
-# # Basher
-# export PATH="$HOME/.basher/bin:$PATH"   ##basher5ea843
-# eval "$(basher init - zsh)"             ##basher5ea843
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
