@@ -6,6 +6,7 @@
 # EXPORT PATH=$PATH:$HOME/.cargo/bin
 # INSTALL_CMD cargo
 
+PATH="$HOME/.cargo/bin:$PATH"
 if (( ! $+commands[cargo] )); then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   EXTRACT_URL  \
