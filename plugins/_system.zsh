@@ -16,14 +16,14 @@ function __fix_max_user_watches () {
 
 INSTALL_CMD unzip
 INSTALL_CMD zip
+INSTALL_CMD bzip2
 INSTALL_CMD jq
 INSTALL_CMD ts moreutils # ts, parallel, chronic
 INSTALL_CMD multitail
 INSTALL_CMD gawk
-INSTALL_CMD tmux
+# INSTALL_CMD tmux
 INSTALL_CMD btop
 INSTALL_CMD make
-INSTALL_CMD bzip2
 INSTALL_CMD envsubst gettext-base
 ( ! $IS_MAC ) && INSTALL_CMD inotifywait inotify-tools
 INSTALL_CMD strings binutils

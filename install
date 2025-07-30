@@ -20,8 +20,11 @@ mkdir -p ~/.config
 #   ALIAS apt "sudo nala"
 # f
 
+DOTFILES_PLUGINS=($(ls $HOME/.dotfiles/plugins | xargs -n 1 basename | sed 's/\.zsh$//'))
+
 export LC_COLLATE=C
-for i_plugin ("$HOME"/.dotfiles/plugins/*.zsh); do
+for i_plugin in "${DOTFILES_PLUGINS[@]}"; do
+  i_plugin="$HOME/.dotfiles/plugins/${i_plugin}.zsh"
   START $(basename ${i_plugin%.*}) "$(head -n1 $i_plugin | cut -c 3-)"
   SOURCE "${i_plugin}"
 done

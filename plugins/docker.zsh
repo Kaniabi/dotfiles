@@ -6,6 +6,7 @@ alias dr="docker run -it --rm"
 alias ddr="docker compose run --rm"
 alias docker-compose="docker compose"
 
+
 if (( ! $+commands[docker] )); then
   if (( $IS_MAC )); then
   else
@@ -36,19 +37,32 @@ if (( ! $+commands[docker] )); then
 fi
 
 if ( $IS_MAC ); then
-  if [ ! -f "~/.docker/cli-plugins/docker-buildx" ]; then
-    echo "Installing docker buildx plugin"
-    set -x
+  LATEST_VERSION=$(curl -s https://api.github.com/repos/docker/buildx/releases/latest | jq -r '.tag_name')
+  if [ -f "$HOME/.docker/cli-plugins/docker-buildx" ]; then
+    CURRENT_VERSION="$(docker buildx version | gawk '{print $2}')"
+    if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+      rm -f "$HOME/.docker/cli-plugins/docker-buildx"
+    fi
+  fi
+  if [ ! -f "$HOME/.docker/cli-plugins/docker-buildx" ]; then
+    echo "Installing docker buildx plugin ($LATEST_VERSION)"
     mkdir -p ~/.docker/cli-plugins
-    curl -fsSL https://github.com/docker/buildx/releases/latest/download/buildx-v0.26.0.darwin-arm64 -o ~/.docker/cli-plugins/docker-buildx
+    curl -fsSL https://github.com/docker/buildx/releases/latest/download/buildx-$LATEST_VERSION.darwin-arm64 -o ~/.docker/cli-plugins/docker-buildx
     chmod +x ~/.docker/cli-plugins/docker-buildx
   fi
-  if [ ! -f "~/.docker/cli-plugins/docker-buildx" ]; then
-    echo "Installing docker buildx plugin"
-    set -x
+
+  LATEST_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
+  if [ -f "$HOME/.docker/cli-plugins/docker-compose" ]; then
+    CURRENT_VERSION="v$(docker compose version --short)"
+    if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+      rm -f "$HOME/.docker/cli-plugins/docker-compose"
+    fi
+  fi
+  if [ ! -f "$HOME/.docker/cli-plugins/docker-compose" ]; then
+    echo "Installing docker compose plugin  ($LATEST_VERSION)"
     mkdir -p ~/.docker/cli-plugins
-    curl -fsSL https://github.com/docker/buildx/releases/latest/download/buildx-v0.26.0.darwin-arm64 -o ~/.docker/cli-plugins/docker-buildx
-    chmod +x ~/.docker/cli-plugins/docker-buildx
+    wget --quiet https://github.com/docker/compose/releases/download/$LATEST_VERSION/docker-compose-darwin-aarch64 -O ~/.docker/cli-plugins/docker-compose
+    chmod +x ~/.docker/cli-plugins/docker-compose
   fi
 fi
 
